@@ -2,10 +2,10 @@ import 'antd/dist/antd.css';
 import { useHistory } from 'react-router-dom'
 import { useLocation } from "react-router-dom";
 import '../../Assets/container/StudentList.css'
-import { PageHeader, Form, Input, Button, Select } from 'antd';
-import React, { useEffect, useState, useReducer } from 'react'
+import { PageHeader, Form, Button, Select } from 'antd';
+import React, { useEffect, useState } from 'react'
 import { updateAvailibility } from '../../services/Teacher';
-import { getTeacherProfileByDate, getSchedule, getTags ,getTagByName} from '../../services/Student'
+import { getTeacherProfileByDate, getSchedule} from '../../services/Student'
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -16,13 +16,10 @@ function CreateAvailibility() {
     const history = useHistory();
     const location = useLocation();
     const [open, setOpen] = useState(false);
-    const [open1, setOpen1] = useState(false);
     const [loadingS, setLoadingS] = useState(false);
     const [student, setStudent] = useState(null);
     const [studentList, setStudentList] = useState([]);
-    const [tags, setTags] = useState([]);
-    const [defaulttags, setDefaultTags] = useState([]);
-    const [tagsList, setTagsList] = useState([]);
+    const [defaulttags] = useState([]);
     const [children, setChildren] = useState(null);
     const [form] = Form.useForm();
     const [schedules, setSchedules] = useState([]);
@@ -30,18 +27,8 @@ function CreateAvailibility() {
     const [ends, setEnds] = useState([]);
     const [dat, setDat] = useState(null);
     const [endDate, setEndDate] = useState(null);
-    const [subjec, setSubjec] = useState(null);
     const [submitting, setSubmitting] = useState(false);
     const [teacher, setTeacher] = useState(location.state.teacher);
-
-    const [sortingName, setSortingName] = useState("name");
-    const [sortingType, setSortingType] = useState("desc");
-
-    const [listProps, setListProps] = useState({
-        totalCount: 0,
-        index: 0,
-        size: 10,
-    });
 
     useEffect(() => {
         setChildren(teacher.teacherProfile);
@@ -60,7 +47,7 @@ function CreateAvailibility() {
 
     const changeChildren = (id) => {
         setDates([]);
-        let _children = studentList.filter(c => c.id == id)[0];
+        let _children = studentList.filter(c => c.id === id)[0];
         setChildren(_children);
         getSchedule(1).then(data => {
             setSchedules(data.content);
@@ -71,7 +58,7 @@ function CreateAvailibility() {
 
     const changeDate = (date) => {
         setDat(date);
-        setEnds([...new Map(schedules.filter(s => children.subjects.includes(s.subject)).filter(s => s.startDate == date).map(item => [item['id'], item])).values()]);
+        setEnds([...new Map(schedules.filter(s => children.subjects.includes(s.subject)).filter(s => s.startDate === date).map(item => [item['id'], item])).values()]);
     }
 
     const changeEndDate = (date) => {
@@ -79,8 +66,8 @@ function CreateAvailibility() {
     }
 
     const handleSubmit = () => {
-        let s = schedules.filter(s => s.startDate == dat).filter(s => s.endDate == endDate)[0];
-        if (s == null || children == null) {
+        let s = schedules.filter(s => s.startDate === dat).filter(s => s.endDate === endDate)[0];
+        if (s === null || children === null) {
             alert('Fill the form');
             return
         }

@@ -43,7 +43,7 @@ function Login() {
   useEffect(() => {
     document.body.classList.add("img-bg");
     document.body.classList.add("min-height-full");
-    if (window.location.pathname == '/login') {
+    if (window.location.pathname === '/login') {
       document.body.style.backgroundImage = `url(${background})`;
       document.getElementById('root').style.height = '100%';
       document.getElementsByClassName('ant-layout')[0].style.height = '100%';

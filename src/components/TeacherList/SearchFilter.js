@@ -5,7 +5,7 @@ const { Option } = Select;
 const SearchFilter = ({changeInput,defultType,searchList}) => {
     const onKeyEnter = (e) => {
         //alert("not enter")
-        if(e.keyCode == 13){
+        if(e.keyCode === 13){
             searchList();
         }
     }

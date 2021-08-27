@@ -66,9 +66,9 @@ function TeacherProfile() {
                 return {
                     onClick: () => {
                         setSortingName("firstName");
-                        if (sortingType == "") { setSortingType("asc") }
-                        else if (sortingType == "asc") { setSortingType("desc") }
-                        else if (sortingType == "desc") { setSortingType("asc"); setSortingName("firstName"); }
+                        if (sortingType === "") { setSortingType("asc") }
+                        else if (sortingType === "asc") { setSortingType("desc") }
+                        else if (sortingType === "desc") { setSortingType("asc"); setSortingName("firstName"); }
                     }
                 };
             },
@@ -77,9 +77,9 @@ function TeacherProfile() {
                     style={{ display: "flex", flexDirection: 'row', alignItems: "center" }}
                 >
                     <Tooltip title={record.lastSeenRoom != null ? record.lastSeenRoom : "No last seen room"}>
-                        <FontAwesomeIcon icon={faCircle} color="green" style={{ display: record.onlineStatus == 0 ? "block" : "none" }} />
-                        <FontAwesomeIcon icon={faCircle} color="orange" style={{ display: record.onlineStatus == 1 ? "block" : "none" }} />
-                        <FontAwesomeIcon icon={faCircle} color="red" style={{ display: record.onlineStatus == 2 ? "block" : "none" }} />
+                        <FontAwesomeIcon icon={faCircle} color="green" style={{ display: record.onlineStatus === 0 ? "block" : "none" }} />
+                        <FontAwesomeIcon icon={faCircle} color="orange" style={{ display: record.onlineStatus === 1 ? "block" : "none" }} />
+                        <FontAwesomeIcon icon={faCircle} color="red" style={{ display: record.onlineStatus === 2 ? "block" : "none" }} />
                     </Tooltip>
                     <Tooltip title={(record.firstName + " " + record.lastName)}>
                         <Button
@@ -111,9 +111,9 @@ function TeacherProfile() {
                 return {
                     onClick: () => {
                         setSortingName("createDate");
-                        if (sortingType == "") { setSortingType("asc") }
-                        else if (sortingType == "asc") { setSortingType("desc") }
-                        else if (sortingType == "desc") { setSortingType("asc"); setSortingName("createDate"); }
+                        if (sortingType === "") { setSortingType("asc") }
+                        else if (sortingType === "asc") { setSortingType("desc") }
+                        else if (sortingType === "desc") { setSortingType("asc"); setSortingName("createDate"); }
                     }
                 };
             },
@@ -385,7 +385,7 @@ function TeacherProfile() {
                         </Button>
                     </div>
                     {
-                        (selectedRow.length == 0) ? 
+                        (selectedRow.length === 0) ? 
                             <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-end', marginLeft: '20px' }}>
                                 <Button key='3' size="medium" type="primary" onClick={() => history.push('/teacherprofiles/add')}>
                                     < PlusOutlined />

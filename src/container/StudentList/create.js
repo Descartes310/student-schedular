@@ -101,10 +101,10 @@ function CreateBooking() {
         setSubjects([]);
         setDat(null);
         setSubjec(null);
-        if (value == null) {
+        if (value === null) {
             setChildren(null)
         }
-        let _children = studentList.filter(c => c.id == value.id)[0];
+        let _children = studentList.filter(c => c.id === value.id)[0];
         setChildren(_children);
         getSchedule(_children.grade ? _children.grade : 0, -1).then(data => {
             setSchedules(data.content)
@@ -121,7 +121,7 @@ function CreateBooking() {
 
     const handleSubmit = () => {
         //let s = schedules.filter(s => s.startDate == dat).filter(s => s.subject == subjec)[0];
-        if (comment == null || schedule == null)
+        if (comment === null || schedule === null)
             alert('Fill the form');
         setSubmitting(true);
 
@@ -197,9 +197,9 @@ function CreateBooking() {
                 return {
                     onClick: () => {
                         setSortingName("subject");
-                        if (sortingType == "") { setSortingType("asc") }
-                        else if (sortingType == "asc") { setSortingType("desc") }
-                        else if (sortingType == "desc") { setSortingType("asc"); setSortingName("subject"); }
+                        if (sortingType === "") { setSortingType("asc") }
+                        else if (sortingType === "asc") { setSortingType("desc") }
+                        else if (sortingType === "desc") { setSortingType("asc"); setSortingName("subject"); }
                     }
                 };
             },
@@ -223,9 +223,9 @@ function CreateBooking() {
                 return {
                     onClick: () => {
                         setSortingName("startDate");
-                        if (sortingType == "") { setSortingType("asc") }
-                        else if (sortingType == "asc") { setSortingType("desc") }
-                        else if (sortingType == "desc") { setSortingType("asc"); setSortingName("startDate"); }
+                        if (sortingType === "") { setSortingType("asc") }
+                        else if (sortingType === "asc") { setSortingType("desc") }
+                        else if (sortingType === "desc") { setSortingType("asc"); setSortingName("startDate"); }
                     }
                 };
             },
@@ -254,9 +254,9 @@ function CreateBooking() {
                 return {
                     onClick: () => {
                         setSortingName("endDate");
-                        if (sortingType == "") { setSortingType("asc") }
-                        else if (sortingType == "asc") { setSortingType("desc") }
-                        else if (sortingType == "desc") { setSortingType("asc"); setSortingName("endDate"); }
+                        if (sortingType === "") { setSortingType("asc") }
+                        else if (sortingType === "asc") { setSortingType("desc") }
+                        else if (sortingType === "desc") { setSortingType("asc"); setSortingName("endDate"); }
                     }
                 };
             },
@@ -341,18 +341,18 @@ function CreateBooking() {
     const gradesToPrint = (profile) => {
         let i = 0;
         let result = '';
-        if (profile == null) {
+        if (profile === null) {
             return '';
         }
-        if (profile.grades == null) {
+        if (profile.grades === null) {
             return '';
         }
 
         for (i = 0; i < profile.grades.length; i++) {
-            if (i == 0) {
+            if (i === 0) {
                 result += profile.grades[i];
             } else {
-                if (i == (profile.grades.length - 1))
+                if (i === (profile.grades.length - 1))
                     if (Number(profile.grades[i - 1]) !== Number(profile.grades[i]) - 1)
                         result = result + ', ' + profile.grades[i];
                     else

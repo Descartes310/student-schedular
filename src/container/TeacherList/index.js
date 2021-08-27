@@ -35,8 +35,8 @@ function TeacherList() {
     })
     const [teacherList, setTeacherList] = useState();
     const [teacherProfiles, setTeacherProfiles] = useState([]);
-    const [teacherId, setTeacherId] = useState(0);
-    const [mess_id, setMess_id] = useState("t1");
+    const [teacherId] = useState(0);
+    const [mess_id] = useState("t1");
     const [sortingName, setSortingName] = useState("createDate");
     const [studentList, setStudentList] = useState();
     const [sortingType, setSortingType] = useState("desc");
@@ -101,9 +101,11 @@ function TeacherList() {
         onChange: (__, records) => {
             var recordIdArray = [];
             records.map(record => {
-                recordIdArray.push({ id: record.id })
+                recordIdArray.push({ id: record.id });
+                return null;
             })
             setSelectedRow(recordIdArray);
+            return recordIdArray;
         }
     };
 
@@ -112,9 +114,11 @@ function TeacherList() {
         onChange: (__, records) => {
             var recordIdArray = [];
             records.map(record => {
-                recordIdArray.push({ id: record.id })
+                recordIdArray.push({ id: record.id });
+                return null;
             })
             setSelectedRowStudent(recordIdArray);
+            return recordIdArray;
         }
     };
 
@@ -257,9 +261,9 @@ function TeacherList() {
                 return {
                     onClick: () => {
                         setSortingNameStudent("firstName");
-                        if (sortingTypeStudent == "") { setSortingTypeStudent("asc") }
-                        else if (sortingTypeStudent == "asc") { setSortingTypeStudent("desc") }
-                        else if (sortingTypeStudent == "desc") { setSortingTypeStudent("asc"); setSortingNameStudent("firstName"); }
+                        if (sortingTypeStudent === "") { setSortingTypeStudent("asc") }
+                        else if (sortingTypeStudent === "asc") { setSortingTypeStudent("desc") }
+                        else if (sortingTypeStudent === "desc") { setSortingTypeStudent("asc"); setSortingNameStudent("firstName"); }
                     }
                 };
             },
@@ -284,9 +288,9 @@ function TeacherList() {
                 return {
                     onClick: () => {
                         setSortingName("firstName");
-                        if (sortingType == "") { setSortingType("asc") }
-                        else if (sortingType == "asc") { setSortingType("desc") }
-                        else if (sortingType == "desc") { setSortingType("asc"); setSortingName("firstName"); }
+                        if (sortingType === "") { setSortingType("asc") }
+                        else if (sortingType === "asc") { setSortingType("desc") }
+                        else if (sortingType === "desc") { setSortingType("asc"); setSortingName("firstName"); }
                     }
                 };
             },
@@ -330,9 +334,9 @@ function TeacherList() {
                 return {
                     onClick: () => {
                         setSortingName("startDate");
-                        if (sortingType == "") { setSortingType("asc") }
-                        else if (sortingType == "asc") { setSortingType("desc") }
-                        else if (sortingType == "desc") { setSortingType("asc"); setSortingName("startDate"); }
+                        if (sortingType === "") { setSortingType("asc") }
+                        else if (sortingType === "asc") { setSortingType("desc") }
+                        else if (sortingType === "desc") { setSortingType("asc"); setSortingName("startDate"); }
                     }
                 };
             },
@@ -489,9 +493,9 @@ function TeacherList() {
                 return {
                     onClick: () => {
                         setSortingName("studentCount");
-                        if (sortingType == "") { setSortingType("asc") }
-                        else if (sortingType == "asc") { setSortingType("desc") }
-                        else if (sortingType == "desc") { setSortingType("asc"); setSortingName("studentCount"); }
+                        if (sortingType === "") { setSortingType("asc") }
+                        else if (sortingType === "asc") { setSortingType("desc") }
+                        else if (sortingType === "desc") { setSortingType("asc"); setSortingName("studentCount"); }
                     }
                 };
             },
@@ -654,7 +658,7 @@ function TeacherList() {
     const gradesToPrint = (profile) => {
         let i = 0;
         let result = '';
-        if (profile == null) {
+        if (profile === null) {
             return '';
         }
 
@@ -663,10 +667,10 @@ function TeacherList() {
         }
 
         for (i = 0; i < profile.grades.length; i++) {
-            if (i == 0) {
+            if (i === 0) {
                 result += profile.grades[i];
             } else {
-                if (i == (profile.grades.length - 1))
+                if (i === (profile.grades.length - 1))
                     if (Number(profile.grades[i - 1]) !== Number(profile.grades[i]) - 1)
                         result = result + ', ' + profile.grades[i];
                     else
@@ -703,7 +707,7 @@ function TeacherList() {
 
     const onKeyEnter = (e) => {
         //alert("not enter")
-        if (e.keyCode == 13) {
+        if (e.keyCode === 13) {
             getStudentList();
         }
     }
@@ -751,7 +755,7 @@ function TeacherList() {
                         </Button>
                     </div>
                     {
-                        (selectedRow.length == 0) ?
+                        (selectedRow.length === 0) ?
                             <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-end', marginLeft: '20px' }}>
                                 <Button key='3' size="medium" type="primary" onClick={() => history.push("/teacherlist/add")}>
                                     <PlusOutlined />

@@ -96,7 +96,7 @@ const SearchFilter = ({ changeInput, searchList, type}) => {
 
     const onKeyEnter = (e) => {
         //alert("not enter")
-        if (e.keyCode == 13) {
+        if (e.keyCode === 13) {
             searchList();
         }
     }

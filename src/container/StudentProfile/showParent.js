@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { Row, Col, PageHeader, Card, Table, Spin, Tooltip, Button } from 'antd';
 import { useLocation } from "react-router-dom";
 import { getChild } from '../../services/Student'
-import Moment from 'react-moment';
 import { useHistory } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircle } from '@fortawesome/free-solid-svg-icons'
@@ -10,11 +9,10 @@ import { faCircle } from '@fortawesome/free-solid-svg-icons'
 function ShowParent(props) {
 
     const location = useLocation();
-    const { params } = props.match;
     const history = useHistory();
     const [bookings, setBookings] = useState([]);
     const [bookingsLoading, setBookingsLoading] = useState(true);
-    const [parentDetail, setParentDetail] = useState(location.state.parent);
+    const [parentDetail] = useState(location.state.parent);
 
     useEffect(() => {
         console.log(parentDetail)
@@ -39,9 +37,9 @@ const columns = [
                 style={{ display: "flex", flexDirection: 'row', alignItems: "center" }}
             >
                 <Tooltip title={""}>
-                    <FontAwesomeIcon icon={faCircle} color="green" style={{ display: record.onlineStatus == 0 ? "block" : "none" }} />
-                    <FontAwesomeIcon icon={faCircle} color="orange" style={{ display: record.onlineStatus == 1 ? "block" : "none" }} />
-                    <FontAwesomeIcon icon={faCircle} color="red" style={{ display: record.onlineStatus == 2 ? "block" : "none" }} />
+                    <FontAwesomeIcon icon={faCircle} color="green" style={{ display: record.onlineStatus === 0 ? "block" : "none" }} />
+                    <FontAwesomeIcon icon={faCircle} color="orange" style={{ display: record.onlineStatus === 1 ? "block" : "none" }} />
+                    <FontAwesomeIcon icon={faCircle} color="red" style={{ display: record.onlineStatus === 2 ? "block" : "none" }} />
                 </Tooltip>
                 <Tooltip title={(record.firstName + " " + record.lastName)}>
                     <Button

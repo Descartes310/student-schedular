@@ -83,9 +83,9 @@ function Schedule() {
                 return {
                     onClick: () => {
                         setSortingName("subject");
-                        if (sortingType == "") { setSortingType("asc") }
-                        else if (sortingType == "asc") { setSortingType("desc") }
-                        else if (sortingType == "desc") { setSortingType("asc"); setSortingName("subject"); }
+                        if (sortingType === "") { setSortingType("asc") }
+                        else if (sortingType === "asc") { setSortingType("desc") }
+                        else if (sortingType === "desc") { setSortingType("asc"); setSortingName("subject"); }
                     }
                 };
             },
@@ -109,9 +109,9 @@ function Schedule() {
                 return {
                     onClick: () => {
                         setSortingName("startDate");
-                        if (sortingType == "") { setSortingType("asc") }
-                        else if (sortingType == "asc") { setSortingType("desc") }
-                        else if (sortingType == "desc") { setSortingType("asc"); setSortingName("startDate"); }
+                        if (sortingType === "") { setSortingType("asc") }
+                        else if (sortingType === "asc") { setSortingType("desc") }
+                        else if (sortingType === "desc") { setSortingType("asc"); setSortingName("startDate"); }
                     }
                 };
             },
@@ -140,9 +140,9 @@ function Schedule() {
                 return {
                     onClick: () => {
                         setSortingName("endDate");
-                        if (sortingType == "") { setSortingType("asc") }
-                        else if (sortingType == "asc") { setSortingType("desc") }
-                        else if (sortingType == "desc") { setSortingType("asc"); setSortingName("endDate"); }
+                        if (sortingType === "") { setSortingType("asc") }
+                        else if (sortingType === "asc") { setSortingType("desc") }
+                        else if (sortingType === "desc") { setSortingType("asc"); setSortingName("endDate"); }
                     }
                 };
             },
@@ -241,18 +241,18 @@ function Schedule() {
     const gradesToPrint = (profile) => {
         let i = 0;
         let result = '';
-        if (profile == null) {
+        if (profile === null) {
             return '';
         }
-        if (profile.grades == null) {
+        if (profile.grades === null) {
             return '';
         }
 
         for (i = 0; i < profile.grades.length; i++) {
-            if (i == 0) {
+            if (i === 0) {
                 result += profile.grades[i];
             } else {
-                if (i == (profile.grades.length - 1))
+                if (i === (profile.grades.length - 1))
                     if (Number(profile.grades[i - 1]) !== Number(profile.grades[i]) - 1)
                         result = result + ', ' + profile.grades[i];
                     else

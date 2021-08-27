@@ -217,9 +217,9 @@ function StudentListOfTeacher(props) {
                     style={{ display: "flex", flexDirection: 'row', alignItems: "center" }}
                 >
                     <Tooltip title={record.lastSeenRoom != null ? record.lastSeenRoom : "No last seen room"}>
-                        <FontAwesomeIcon icon={faCircle} color="green" style={{ display: record.onlineStatus == 0 ? "block" : "none" }} />
-                        <FontAwesomeIcon icon={faCircle} color="orange" style={{ display: record.onlineStatus == 1 ? "block" : "none" }} />
-                        <FontAwesomeIcon icon={faCircle} color="red" style={{ display: record.onlineStatus == 2 ? "block" : "none" }} />
+                        <FontAwesomeIcon icon={faCircle} color="green" style={{ display: record.onlineStatus === 0 ? "block" : "none" }} />
+                        <FontAwesomeIcon icon={faCircle} color="orange" style={{ display: record.onlineStatus === 1 ? "block" : "none" }} />
+                        <FontAwesomeIcon icon={faCircle} color="red" style={{ display: record.onlineStatus === 2 ? "block" : "none" }} />
                     </Tooltip>
                     <Tooltip title={(record.firstName + " " + record.lastName)}>
                         <Button
@@ -256,9 +256,9 @@ function StudentListOfTeacher(props) {
                     style={{ display: "flex", flexDirection: 'row', alignItems: "center" }}
                 >
                     <Tooltip title={record.lastSeenRoom != null ? record.lastSeenRoom : "No last seen room"}>
-                        <FontAwesomeIcon icon={faCircle} color="green" style={{ display: record.onlineStatus == 0 ? "block" : "none" }} />
-                        <FontAwesomeIcon icon={faCircle} color="orange" style={{ display: record.onlineStatus == 1 ? "block" : "none" }} />
-                        <FontAwesomeIcon icon={faCircle} color="red" style={{ display: record.onlineStatus == 2 ? "block" : "none" }} />
+                        <FontAwesomeIcon icon={faCircle} color="green" style={{ display: record.onlineStatus === 0 ? "block" : "none" }} />
+                        <FontAwesomeIcon icon={faCircle} color="orange" style={{ display: record.onlineStatus === 1 ? "block" : "none" }} />
+                        <FontAwesomeIcon icon={faCircle} color="red" style={{ display: record.onlineStatus === 2 ? "block" : "none" }} />
                     </Tooltip>
                     <Tooltip title={(record.firstName + " " + record.lastName)}>
                         <Button
@@ -339,9 +339,9 @@ function StudentListOfTeacher(props) {
                     style={{ display: "flex", flexDirection: 'row', alignItems: "center" }}
                 >
                     <Tooltip title={record.lastSeenRoom != null ? record.lastSeenRoom : "No last seen room"}>
-                        <FontAwesomeIcon icon={faCircle} color="green" style={{ display: record.onlineStatus == 0 ? "block" : "none" }} />
-                        <FontAwesomeIcon icon={faCircle} color="orange" style={{ display: record.onlineStatus == 1 ? "block" : "none" }} />
-                        <FontAwesomeIcon icon={faCircle} color="red" style={{ display: record.onlineStatus == 2 ? "block" : "none" }} />
+                        <FontAwesomeIcon icon={faCircle} color="green" style={{ display: record.onlineStatus === 0 ? "block" : "none" }} />
+                        <FontAwesomeIcon icon={faCircle} color="orange" style={{ display: record.onlineStatus === 1 ? "block" : "none" }} />
+                        <FontAwesomeIcon icon={faCircle} color="red" style={{ display: record.onlineStatus === 2 ? "block" : "none" }} />
                     </Tooltip>
                     <Tooltip title={(record.firstName + " " + record.lastName)}>
                         <Button

@@ -2,22 +2,15 @@ import PhoneInput from 'react-phone-input-2';
 import { useHistory } from 'react-router-dom';
 import 'react-phone-input-2/lib/bootstrap.css';
 import "react-phone-input-2/lib/bootstrap.css";
+import { getCountry } from '../../services/Student';
 import { useSelector, useDispatch } from 'react-redux';
 import { getTeacherProfile } from '../../services/Teacher';
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useState, useEffect } from 'react';
 import { PageHeader, Button, Select, Form, Input } from 'antd';
-import { getCountry, getSchedule } from '../../services/Student';
 import { bridgeManagement, getTags } from '../../services/Student';
 import { updateTeacher, getSubjects } from '../../services/Teacher';
 import { enableDeleting, enableAssigning } from '../../Action-Reducer/Student/action';
 const { Option } = Select;
-
-const formReducer = (state, event) => {
-  return {
-    ...state,
-    [event.name]: event.value
-  }
-}
 
 function Settings(props) {
 
@@ -28,14 +21,10 @@ function Settings(props) {
   const [open2, setOpen2] = useState(false);
   const [assigning, setAssigning] = useState(false);
   const [bridge, setBridge] = useState(false);
-  const [persist, setPersist] = useState(false);
   const [teacher, setTeacher] = useState(null);
   const [subjectsList, setSubjectsList] = useState([]);
   const [tags, setTags] = useState([{name: null, id: null}]);
-  const [isCreation, setIsCreation] = useState(false);
   const [updated, setUpdated] = useState(false);
-  const [formData, setFormData] = useReducer(formReducer, {});
-  const [form] = Form.useForm();
   const [form2] = Form.useForm();
   const [phone, setPhone] = useState('');
   const [lastName, setLastName] = useState('');
@@ -115,19 +104,12 @@ function Settings(props) {
 }
 
   const changeTag = (name) => {
-    if (name != 'no tag') {
-        localStorage.setItem(`currentTag`, tags.find(t => t.name == name).name);
+    if (name !== 'no tag') {
+        localStorage.setItem(`currentTag`, tags.find(t => t.name === name).name);
     } else {
       localStorage.setItem(`currentTag`, null);
     }
 }
-
-  const handleChange = event => {
-    setFormData({
-      name: event.target.name,
-      value: event.target.value,
-    });
-  }
 
   const handleChangeSelect = (value) => {
     setGrades(value.toString().split(',').map(i => Number(i)));
@@ -137,7 +119,7 @@ function Settings(props) {
     setSubjects(value);
   }
 
-  const handleSubmit = () => {
+  // const handleSubmit = () => {
 
     // if (formData.tenant) {
     //   if (
@@ -160,7 +142,7 @@ function Settings(props) {
     //   console.log(err)
     // });
 
-  }
+  //}
 
   const getTagList = () => {
     getTags(0, 100000, "name", "desc").then(data => {
