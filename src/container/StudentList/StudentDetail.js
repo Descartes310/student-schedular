@@ -3,16 +3,9 @@ import { Form, Input } from 'antd';
 import { CheckOutlined } from '@ant-design/icons';
 import { Row, Col, PageHeader, Button, Card } from 'antd';
 import { useLocation, useHistory } from "react-router-dom";
-import React, { useState, useEffect, useReducer } from 'react';
-import { assignStudentToAnotherTeacher, getBooking, sendMessageToBooking, getStudentDetail, getBookingAvailability } from '../../services/Student';
+import React, { useState, useEffect } from 'react';
+import { assignStudentToAnotherTeacher, getStudentDetail, getBookingAvailability } from '../../services/Student';
 import { createComment, updateComment, approveComment, getCourses, getTeacherProfileById, getScheduleById, getBookingComments } from '../../services/Teacher';
-
-const formReducer = (state, event) => {
-    return {
-        ...state,
-        [event.name]: event.value
-    }
-}
 
 function StudentDetail(props) {
 
@@ -20,13 +13,10 @@ function StudentDetail(props) {
     const { params } = props.match;
     const location = useLocation();
     const [content, setContent] = useState('');
-    const [message, setMessage] = useState('');
     const [courses, setCourses] = useState([]);
     const [loading, setLoading] = useState(true);
     const [comment, setComment] = useState(null);
     const [comments, setComments] = useState([]);
-    const [submitting, setSubmitting] = useState(false);
-    const [formData, setFormData] = useReducer(formReducer, {});
     const [studentDetail, setStudentDetail] = useState(location.state.student);
 
     useEffect(() => {
@@ -54,13 +44,6 @@ function StudentDetail(props) {
             }
         })
     }, [loading]);
-
-    const handleChange = event => {
-        setFormData({
-            name: event.target.name,
-            value: event.target.value,
-        });
-    }
 
     const getAllCourses = () => {
         getCourses().then(data => {
@@ -112,22 +95,6 @@ function StudentDetail(props) {
             updateComment(comment.id, content).then(data => {
                 // history.push('/studentlist')
                 getComments();
-            })
-        }
-    }
-
-    const handleSubmitSendMessage = () => {
-        if (message === null) {
-            alert("Please, enter a message");
-            return
-        } else {
-            setSubmitting(true);
-            getBooking(studentDetail.id).then(result => {
-                sendMessageToBooking(result.data.id, formData.message).then(result => {
-                    setSubmitting(false);
-                    setMessage('');
-                    setFormData([]);
-                })
             })
         }
     }

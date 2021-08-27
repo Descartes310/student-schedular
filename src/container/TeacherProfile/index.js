@@ -20,7 +20,7 @@ function TeacherProfile() {
     const [teacherList, setTeacherList] = useState();
     const [sortingName, setSortingName] = useState("createDate");
     const [sortingType, setSortingType] = useState("desc");
-    const [mess_id, setMess_id] = useState("t1");
+    const [mess_id] = useState("t1");
     const deletingStatus = useSelector((state) => {
         return state.Student.enableDeleting;
     })
@@ -138,9 +138,9 @@ function TeacherProfile() {
                 return {
                     onClick: () => {
                         setSortingName("email");
-                        if (sortingType == "") { setSortingType("asc") }
-                        else if (sortingType == "asc") { setSortingType("desc") }
-                        else if (sortingType == "desc") { setSortingType("asc"); setSortingName("email"); }
+                        if (sortingType === "") { setSortingType("asc") }
+                        else if (sortingType === "asc") { setSortingType("desc") }
+                        else if (sortingType === "desc") { setSortingType("asc"); setSortingName("email"); }
                     }
                 };
             },
@@ -164,9 +164,9 @@ function TeacherProfile() {
                 return {
                     onClick: () => {
                         setSortingName("phoneNumber");
-                        if (sortingType == "") { setSortingType("asc") }
-                        else if (sortingType == "asc") { setSortingType("desc") }
-                        else if (sortingType == "desc") { setSortingType("asc"); setSortingName("phoneNumber"); }
+                        if (sortingType === "") { setSortingType("asc") }
+                        else if (sortingType === "asc") { setSortingType("desc") }
+                        else if (sortingType === "desc") { setSortingType("asc"); setSortingName("phoneNumber"); }
                     }
                 };
             },

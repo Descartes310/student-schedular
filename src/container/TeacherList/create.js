@@ -25,9 +25,8 @@ function CreateAvailibility() {
     const [ends, setEnds] = useState([]);
     const [dat, setDat] = useState(null);
     const [endDate, setEndDate] = useState(null);
-    const [subjec, setSubjec] = useState(null);
     const [submitting, setSubmitting] = useState(false);
-    const [sortingType, setSortingType] = useState("desc");
+    const [sortingType] = useState("desc");
 
     useEffect(() => {
         getAllCourses();
@@ -36,8 +35,7 @@ function CreateAvailibility() {
     const changeChildren = (id) => {
         setDates([]);
         setDat(null);
-        setSubjec(null);
-        let _children = studentList.filter(c => c.id == id)[0];
+        let _children = studentList.filter(c => c.id === id)[0];
         setChildren(_children);
         getSchedule(1).then(data => {
             setSchedules(data.content);
@@ -49,7 +47,7 @@ function CreateAvailibility() {
 
     const changeDate = (date) => {
         setDat(date);
-        setEnds([...new Map(schedules.filter(s => children.subjects.includes(s.subject)).filter(s => s.startDate == date).map(item => [item['createDate'], item])).values()]);
+        setEnds([...new Map(schedules.filter(s => children.subjects.includes(s.subject)).filter(s => s.startDate === date).map(item => [item['createDate'], item])).values()]);
         //setEnds([...new Map(schedules.filter(s => s.startDate == date).map(item => [item['createDate'], item])).values()]);
     }
 

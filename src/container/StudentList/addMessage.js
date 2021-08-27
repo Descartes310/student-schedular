@@ -16,8 +16,6 @@ function AddMessage(props) {
     const [form] = Form.useForm();
     const { params } = props.match;
     const [body, setBody] = useState(null);
-    const [open, setOpen] = useState(false);
-    const [template, setTemplate] = useState(null);
     const [loading, setLoading] = useState(true);
     const [recipients, setRecipients] = useState([]);
     const [submitting, setSubmitting] = useState(false);

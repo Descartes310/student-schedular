@@ -1,8 +1,7 @@
 import React from 'react'
-import { Form, Select, Input, Button } from 'antd'
+import { Form, Input, Button } from 'antd'
 
-const { Option } = Select;
-const SearchFilter = ({changeInput,defultType,searchList}) => {
+const SearchFilter = ({changeInput,searchList}) => {
     const onKeyEnter = (e) => {
         //alert("not enter")
         if(e.keyCode === 13){

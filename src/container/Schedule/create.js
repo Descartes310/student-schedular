@@ -8,15 +8,6 @@ import { PageHeader, Form, Input, Button, Select } from 'antd';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { createSchedule, getCoursesByGrade } from '../../services/Teacher';
 
-const { TextArea } = Input;
-
-const formReducer = (state, event) => {
-    return {
-        ...state,
-        [event.name]: event.value
-    }
-}
-
 function CreateSchedule() {
 
     const history = useHistory();

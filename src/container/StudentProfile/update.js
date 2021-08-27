@@ -23,23 +23,22 @@ function UpdateStudent() {
     const location = useLocation();
     const [submitting, setSubmitting] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [data, setData] = useState(location.state.student);
+    const [data] = useState(location.state.student);
     const [open, setOpen] = useState(false);
     const [open1, setOpen1] = useState(false);
     const [parents, setParents] = useState([]);
     const [parent, setParent] = useState(null);
-    const [name, setName] = useState('');
     const [lastName, setLastName] = useState(location.state.student.lastName);
     const [formData, setFormData] = useReducer(formReducer, {});
     const [form] = Form.useForm();
 
     const [tagsList, setTagsList] = useState([]);
     const [tags, setTags] = useState([]);
-    const [defaulttags, setDefaultTags] = useState([]);
-    const [sortingName, setSortingName] = useState("name");
-    const [sortingType, setSortingType] = useState("desc");
+    const [defaulttags] = useState([]);
+    const [sortingName] = useState("name");
+    const [sortingType] = useState("desc");
 
-    const [listProps, setListProps] = useState({
+    const [listProps] = useState({
         index: 0,
         size: 10,
     });

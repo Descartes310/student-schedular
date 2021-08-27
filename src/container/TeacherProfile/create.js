@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import 'react-phone-input-2/lib/bootstrap.css';
 import "react-phone-input-2/lib/bootstrap.css";
 import '../../Assets/container/StudentList.css';
-import { getCountry, getTags } from '../../services/Student';
+import { getCountry } from '../../services/Student';
 import React, { useEffect, useState, useReducer } from 'react'
 import { PageHeader, Form, Input, Button, Select } from 'antd';
 import { getSubjects, createTeacher } from '../../services/Teacher';
@@ -24,49 +24,17 @@ function CreateTeacher() {
     const [subjects, setSubjects] = useState([]);
     const [subjectsList, setSubjectsList] = useState([]);
     const [phone, setPhone] = useState('');
-    const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useReducer(formReducer, {});
     const [form] = Form.useForm();
     const [submitting, setSubmitting] = useState(false);
     const [open, setOpen] = useState(false);
     const [open2, setOpen2] = useState(false);
-    const [open3, setOpen3] = useState(false);
-
-    const [sortingName, setSortingName] = useState("name");
-    const [sortingType, setSortingType] = useState("desc");
-
-    const [listProps, setListProps] = useState({
-        index: 0,
-        size: 10,
-    });
-
-    const [open1, setOpen1] = useState(false);
-    const [tagsList, setTagsList] = useState([]);
-    const [tags, setTags] = useState([]);
-
-    const getEnabledTags = () => {
-        setLoading(true)
-        getTags(listProps.index, listProps.size, sortingName, sortingType).then(data => {
-            if (data) {
-                if (data.content) {
-                    setTagsList(data.content.filter(t => t.enabled === true));
-                }
-            }
-        }).finally(() => setLoading(false))
-    }
-
-    const handleChangeTags = (value) => {
-        setTags(value);
-    }
-
 
     useEffect(() => {
         getAllSubjects();
         getCountry().then(data => {
             setCountry(data.countryCode.toString().toLowerCase());
         })
-        getEnabledTags();
-        // getTenantsList();
     }, []);
 
     const handleChange = event => {

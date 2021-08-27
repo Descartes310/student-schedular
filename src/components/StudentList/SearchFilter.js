@@ -1,16 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import { Form, Select, Input, Button, DatePicker } from 'antd'
+import React, { useState } from 'react'
+import { Form, Input, Button, } from 'antd'
 import { SearchOutlined } from "@ant-design/icons"
-import moment from 'moment';
 
-const { Option } = Select;
 const SearchFilter = ({ changeInput, searchList, type}) => {
-
-
-    const [startDate, setStartDate] = useState();
-    const [endDate, setEndDate] = useState();
-    const [startTime, setStartTime] = useState();
-    const [endTime, setEndTime] = useState();
 
     const [formDate, setFormDate] = useState({
         startDate: localStorage.getItem('startDate') ?? "",
@@ -103,7 +95,7 @@ const SearchFilter = ({ changeInput, searchList, type}) => {
     return (
         <Form layout="inline" style={{ marginRight: '20px' }}>
             {
-                type != 'schedule' ?
+                type !== 'schedule' ?
                 <>
                     <Form.Item style={{ width: '180px' }}>
                         <Input

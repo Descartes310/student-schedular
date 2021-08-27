@@ -6,14 +6,13 @@ import '../../Assets/container/StudentList.css'
 import React, { useEffect, useState } from 'react';
 import { PageHeader, Form, Button, Select } from 'antd';
 import { updateBooking, getCourses } from '../../services/Teacher';
-import { getStudentProfileByDate, getSchedule } from '../../services/Student';
+import { getSchedule } from '../../services/Student';
 
 function UpdateBooking() {
 
     const history = useHistory();
     const location = useLocation();
     const [data] = useState(location.state.student);
-    const [studentList, setStudentList] = useState([]);
     const [form] = Form.useForm();
     const [schedules, setSchedules] = useState([]);
     const [courses, setCourses] = useState([]);
@@ -22,8 +21,7 @@ function UpdateBooking() {
 
     useEffect(() => {
         getAllCourses();
-        setSubjec(data.schedule.id)
-        getStudents();
+        setSubjec(data.schedule.id);
         getSchedule(data.studentProfile.grade, -1).then(data => {
             setSchedules(data.content)
 
@@ -38,15 +36,6 @@ function UpdateBooking() {
                 }
             }
         })
-    }
-
-    const changeChildren = (id) => {
-        setSubjec(null);
-        let _children = studentList.filter(c => c.id === id)[0];
-        getSchedule(_children.grade ? _children.grade : 0, -1).then(data => {
-            setSchedules(data.content)
-
-        });
     }
 
     const changeSubject = (subjectId) => {
@@ -67,16 +56,6 @@ function UpdateBooking() {
             alert("Error occured when saving data, please retry!")
             console.log(err)
         }).finally(() => setSubmitting(false));
-    }
-
-    const getStudents = () => {
-        getStudentProfileByDate(localStorage.getItem('toStart'), localStorage.getItem('toEnd'), 0, 100, 'firstName', 'asc').then(data => {
-            if (data) {
-                if (data.content) {
-                    setStudentList(data.content);
-                }
-            }
-        })
     }
 
     return (

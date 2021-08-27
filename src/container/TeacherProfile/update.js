@@ -8,7 +8,7 @@ import '../../Assets/container/StudentList.css';
 import React, { useEffect, useState, useReducer } from 'react';
 import { PageHeader, Form, Input, Button, Select } from 'antd';
 import { updateTeacher, getSubjects} from '../../services/Teacher';
-import { getCountry, getSchedule, getTags } from '../../services/Student';
+import { getCountry, getTags } from '../../services/Student';
 
 const formReducer = (state, event) => {
     return {
@@ -33,16 +33,16 @@ function CreateTeacher() {
     const [open, setOpen] = useState(false);
     const [open1, setOpen1] = useState(false);
     const [open2, setOpen2] = useState(false);
-    const [teacher, setTeacher] = useState(location.state.teacher);
+    const [teacher] = useState(location.state.teacher);
 
     const [tagsList, setTagsList] = useState([]);
     const [tags, setTags] = useState([]);
-    const [defaulttags, setDefaultTags] = useState([0]);
+    const [defaulttags] = useState([0]);
 
-    const [sortingName, setSortingName] = useState("name");
-    const [sortingType, setSortingType] = useState("desc");
+    const [sortingName] = useState("name");
+    const [sortingType] = useState("desc");
 
-    const [listProps, setListProps] = useState({
+    const [listProps] = useState({
         index: 0,
         size: 10,
     });
@@ -124,7 +124,7 @@ function CreateTeacher() {
         let tgs=[]
         tags.map(res => tgs.push({"id": res}))
 
-        updateTeacher(teacher.id, formData.firstName, formData.lastName, formData.iemail, grades, subjects.map(sid => { return { id: sid }}), phone, formData.schoolName, formData.schoolBoard, tgs.filter(t => t.id != 0)).then(data => {
+        updateTeacher(teacher.id, formData.firstName, formData.lastName, formData.iemail, grades, subjects.map(sid => { return { id: sid }}), phone, formData.schoolName, formData.schoolBoard, tgs.filter(t => t.id !== 0)).then(data => {
             history.push(`/teacherprofiles`);
             // history.push(`/studentlist/teacher/${data.data.id}`, { teacher: data.data })
         }).catch(err => {
