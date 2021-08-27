@@ -1,9 +1,8 @@
-import React, { useState, useReducer } from 'react'
-
-import { PageHeader, Form, Input, Button } from 'antd'
-import { useHistory } from 'react-router-dom'
-import { addTag } from '../../services/Student'
 import 'antd/dist/antd.css';
+import { useHistory } from 'react-router-dom';
+import { createSubject } from '../../services/Course';
+import React, { useState, useReducer } from 'react';
+import { PageHeader, Form, Input, Button } from 'antd';
 
 const formReducer = (state, event) => {
     return {
@@ -12,7 +11,7 @@ const formReducer = (state, event) => {
     }
 }
 
-const CreateTag = () => {
+const CreateSubject = () => {
 
     const history = useHistory();
 
@@ -28,24 +27,24 @@ const CreateTag = () => {
     }
 
     const handleSubmit = () => {
-        if (formData.name) {
-            if (formData.name.toString().length <= 0) {
-                alert("Please, fill the form 1!");
+        if (formData.name && formData.language) {
+            if (formData.name.toString().length <= 0 || formData.language.toString().length <= 0) {
+                alert("Please, fill the name and language!");
                 return
             }
         } else {
-            alert("Please, fill the form 2!");
+            alert("Please, fill the form!");
             return
         }
         setSubmitting(true)
 
         let data = {
             name: formData.name,
-            url: formData.url
+            language: formData.language
         }
         
-        addTag(data).then(result => {
-            history.push(`/tagList`)
+        createSubject(data).then(result => {
+            history.push(`/subjects`)
         }).finally(() => setSubmitting(false));
 
     }
@@ -54,7 +53,7 @@ const CreateTag = () => {
         <div>
             <PageHeader
                 ghost={false}
-                title={<p style={{ fontSize: '3em', textAlign: 'center', marginTop: '20px', marginBottom: '20px' }}>Create Tag</p>}
+                title={<p style={{ fontSize: '3em', textAlign: 'center', marginTop: '20px', marginBottom: '20px' }}>Create Subject</p>}
                 extra={[
                 ]}
             >
@@ -82,14 +81,14 @@ const CreateTag = () => {
                         display: 'flex',
                         flexDirection: 'row'
                     }}>
-                        <Form.Item label="Url" style={{ flex: 1, marginRight: '40px' }}>
-                            <Input type="url" name="url" onChange={handleChange} />
+                        <Form.Item label="Language" style={{ flex: 1, marginRight: '40px' }}>
+                            <Input type="language" name="language" onChange={handleChange} />
                         </Form.Item>
                     </div>
                     <Form.Item style={{ flex: 1, marginRight: '40px', marginTop: '20px' }}>
                         <Button disabled={submitting} type="primary" size="large" htmlType="submit">
                             {
-                                submitting ? 'Loading...' : 'Create a Tag'
+                                submitting ? 'Loading...' : 'Create a subject'
                             }
                         </Button>
                     </Form.Item>
@@ -98,4 +97,4 @@ const CreateTag = () => {
         </div >
     )
 }
-export default CreateTag;
+export default CreateSubject;

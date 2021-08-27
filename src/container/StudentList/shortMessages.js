@@ -59,9 +59,9 @@ function ShortMessageList(props) {
                 return {
                     onClick: () => {
                         setSortingName("firstName");
-                        if (sortingType == "") { setSortingType("asc") }
-                        else if (sortingType == "asc") { setSortingType("desc") }
-                        else if (sortingType == "desc") { setSortingType("asc"); setSortingName("firstName"); }
+                        if (sortingType === "") { setSortingType("asc") }
+                        else if (sortingType === "asc") { setSortingType("desc") }
+                        else if (sortingType === "desc") { setSortingType("asc"); setSortingName("firstName"); }
                     }
                 };
             },
@@ -91,9 +91,9 @@ function ShortMessageList(props) {
                 return {
                     onClick: () => {
                         setSortingName("createDate");
-                        if (sortingType == "") { setSortingType("asc") }
-                        else if (sortingType == "asc") { setSortingType("desc") }
-                        else if (sortingType == "desc") { setSortingType("asc"); setSortingName("createDate"); }
+                        if (sortingType === "") { setSortingType("asc") }
+                        else if (sortingType === "asc") { setSortingType("desc") }
+                        else if (sortingType === "desc") { setSortingType("asc"); setSortingName("createDate"); }
                     }
                 };
             },

@@ -1,14 +1,13 @@
 import 'antd/dist/antd.css';
 import { useHistory } from 'react-router-dom'
 import '../../Assets/container/StudentList.css'
-import { PageHeader, Form, Input, Button, Select } from 'antd';
+import { PageHeader, Form, Input, Button } from 'antd';
 import { createStudent } from '../../services/Teacher';
-import { getParentProfile, findParentProfileByEmail, getTags } from '../../services/Student';
+import { getParentProfile, findParentProfileByEmail } from '../../services/Student';
 import React, { useEffect, useState, useReducer } from 'react'
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Search from 'antd/lib/input/Search';
 
 const formReducer = (state, event) => {
     return {
@@ -21,7 +20,7 @@ function CreateStudent() {
 
     const history = useHistory();
     const [submitting, setSubmitting] = useState(false);
-    const [loading, setLoading] = useState(false);
+    const [loading] = useState(false);
     const [open, setOpen] = useState(false);
     const [parents, setParents] = useState([]);
     const [parent, setParent] = useState(null);

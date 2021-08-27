@@ -30,7 +30,7 @@ function StudentList() {
     const [open, setOpen] = useState(false);
     const [parents, setParents] = useState([]);
     const [courses, setCourses] = useState([]);
-    const [mess_id, setMess_id] = useState("s1");
+    const [mess_id] = useState("s1");
     const [schedules, setSchedules] = useState([]);
     const [studentList, setStudentList] = useState();
     const [teacherList, setTeacherList] = useState([]);
@@ -72,7 +72,8 @@ function StudentList() {
                 recordIdArray.push({ id: record.id, firstName: record.studentProfile.firstName, lastName: record.studentProfile.lastName })
             })
             setSelectedRow(recordIdArray);
-            dispatch(assignStudents(recordIdArray))
+            dispatch(assignStudents(recordIdArray));
+            return recordIdArray;
         }
     };
 
@@ -147,9 +148,9 @@ function StudentList() {
                 return {
                     onClick: () => {
                         setSortingName("firstName");
-                        if (sortingType == "") { setSortingType("asc") }
-                        else if (sortingType == "asc") { setSortingType("desc") }
-                        else if (sortingType == "desc") { setSortingType("asc"); setSortingName("firstName"); }
+                        if (sortingType === "") { setSortingType("asc") }
+                        else if (sortingType === "asc") { setSortingType("desc") }
+                        else if (sortingType === "desc") { setSortingType("asc"); setSortingName("firstName"); }
                     }
                 };
             },
@@ -200,9 +201,9 @@ function StudentList() {
                 return {
                     onClick: () => {
                         setSortingName("startDate");
-                        if (sortingType == "") { setSortingType("asc") }
-                        else if (sortingType == "asc") { setSortingType("desc") }
-                        else if (sortingType == "desc") { setSortingType("asc"); setSortingName("startDate"); }
+                        if (sortingType === "") { setSortingType("asc") }
+                        else if (sortingType === "asc") { setSortingType("desc") }
+                        else if (sortingType === "desc") { setSortingType("asc"); setSortingName("startDate"); }
                     }
                 };
             },
@@ -227,9 +228,9 @@ function StudentList() {
                 return {
                     onClick: () => {
                         setSortingName("subject");
-                        if (sortingType == "") { setSortingType("asc") }
-                        else if (sortingType == "asc") { setSortingType("desc") }
-                        else if (sortingType == "desc") { setSortingType("asc"); setSortingName("subject"); }
+                        if (sortingType === "") { setSortingType("asc") }
+                        else if (sortingType === "asc") { setSortingType("desc") }
+                        else if (sortingType === "desc") { setSortingType("asc"); setSortingName("subject"); }
                     }
                 };
             },
@@ -279,9 +280,9 @@ function StudentList() {
                 return {
                     onClick: () => {
                         setSortingName("grade");
-                        if (sortingType == "") { setSortingType("asc") }
-                        else if (sortingType == "asc") { setSortingType("desc") }
-                        else if (sortingType == "desc") { setSortingType("asc"); setSortingName("grade"); }
+                        if (sortingType === "") { setSortingType("asc") }
+                        else if (sortingType === "asc") { setSortingType("desc") }
+                        else if (sortingType === "desc") { setSortingType("asc"); setSortingName("grade"); }
                     }
                 };
             },
@@ -326,7 +327,6 @@ function StudentList() {
         },
         ,
         {
-            title: 'Teacher Name',
             title: <div><span>Teacher </span>
             </div>,
             render: (record) => {
@@ -683,7 +683,7 @@ function StudentList() {
                         </Button>
                     </div>
                     {
-                        (selectedRow.length == 0) ?
+                        (selectedRow.length === 0) ?
                             <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-end', marginLeft: '20px' }}>
                                 <Button key='3' size="medium" type="primary" onClick={() => history.push("/studentlist/add")}>
                                     <PlusOutlined />

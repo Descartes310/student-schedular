@@ -1,13 +1,6 @@
 import axios from 'axios'
 import * as routes from '../routes';
 
-const headers = {
-    'Content-type': 'multipart/form-data',
-    Accept: 'application/json',
-    AccessControlAllowOrigin: '*'
-    // Authorization: 'Basic ' + btoa(routes.OAUTH.CLIENT_ID + ":" + routes.OAUTH.CLIENT_SECRET)
-}
-
 export const getTeacherList = (page, size, sortName, sortType) => {
     return axios.get(`${routes.AVAILABILITY}?page=${page}&size=${size}&sort=${sortName},${sortType ? sortType : 'asc'}`, {
         headers: {
@@ -151,8 +144,8 @@ export const getCoursesByGrade = (grade) => {
         })
 }
 
-export const getSubjects = (page = 0, size = 1000, sortName = "name", sortType = "asc") => {
-    return axios.get(`${routes.SUBJECT}?page=${page}&size=${size}&sort=${sortName},${sortType ? sortType : 'asc'}`)
+export const getSubjects = (page = 0, size = 1000, sortName = "name", sortType = "asc", subject = '') => {
+    return axios.get(`${routes.SUBJECT}?page=${page}&size=${size}&subject=${subject}&sort=${sortName},${sortType ? sortType : 'asc'}`)
         .then(res => {
             return res.data;
         })
@@ -173,7 +166,7 @@ export const getTenantByName = (displayName, page, size) => {
 }
 
 export const getTeacherListByDate = (start, end, page, size, sortName = 'firstName', sortType = 'asc') => {
-    if (start == null || end == null) {
+    if (start === null || end === null) {
         let today = new Date();
         today.setDate(today.getDate() - 1)
         let day = today.getDate() < 10 ? '0' + (today.getDate()) : (today.getDate())
@@ -182,13 +175,13 @@ export const getTeacherListByDate = (start, end, page, size, sortName = 'firstNa
         let hours = today.getHours().toString().padStart(2, '0');
         let minutes = today.getMinutes().toString().padStart(2, '0');
 
-        if (localStorage.getItem('startDate') == null || localStorage.getItem('toStart') == null) {
+        if (localStorage.getItem('startDate') === null || localStorage.getItem('toStart') === null) {
             localStorage.setItem('startDate', year + '-' + month + '-' + day)
             localStorage.setItem('toStart', month + '%2F' + day + '%2F' + year + '%20' + hours + ':' + minutes + ':00 -0500')
             start = month + '%2F' + day + '%2F' + year + '%20' + hours + ':' + minutes + ':00 -0500';
         }
 
-        if (localStorage.getItem('startTime') == null) {
+        if (localStorage.getItem('startTime') === null) {
             localStorage.setItem('startTime', today.getHours().toString().padStart(2, '0') + ':' + today.getMinutes().toString().padStart(2, '0'));
         }
 
@@ -200,14 +193,14 @@ export const getTeacherListByDate = (start, end, page, size, sortName = 'firstNa
         hours = today.getHours().toString().padStart(2, '0');
         minutes = today.getMinutes().toString().padStart(2, '0');
 
-        if (localStorage.getItem('endDate') == null || localStorage.getItem('toEnd') == null) {
+        if (localStorage.getItem('endDate') === null || localStorage.getItem('toEnd') === null) {
             localStorage.setItem('endDate', year + '-' + month + '-' + day)
             localStorage.setItem('toEnd', month + '%2F' + day + '%2F' + year + '%20' + hours + ':' + minutes + ':00 -0500')
             end = month + '%2F' + day + '%2F' + year + '%20' + hours + ':' + minutes + ':00 -0500';
 
         }
 
-        if (localStorage.getItem('endTime') == null) {
+        if (localStorage.getItem('endTime') === null) {
             localStorage.setItem('endTime', today.getHours().toString().padStart(2, '0') + ':' + today.getMinutes().toString().padStart(2, '0'));
         }
 
@@ -303,14 +296,6 @@ export const googleSignIn = (id_token) => {
     body.append('provider', 'google');
 
     let data = { "token": id_token, "provider": 'google' }
-
-    var config = {
-        headers: {
-            'Content-Length': 0,
-            'Content-Type': 'text/plain'
-        },
-        responseType: 'text'
-    };
 
     return axios.post(`${routes.SERVER_ADDRESS}/oauth/verify`, data).then(res => {
         localStorage.setItem('token', JSON.stringify(res.data));

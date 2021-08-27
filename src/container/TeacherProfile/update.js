@@ -71,7 +71,7 @@ function CreateTeacher() {
         getTags(listProps.index, listProps.size, sortingName, sortingType).then(data => {
             if (data) {
                 if (data.content) {
-                    setTagsList(data.content.filter(t => t.enabled == true));
+                    setTagsList(data.content.filter(t => t.enabled === true));
                 }
             }
         }).finally(() => setLoading(false))

@@ -1,13 +1,6 @@
 import axios from 'axios';
 import * as routes from '../routes';
 
-
-const headers = {
-    'Content-type': 'multipart/form-data',
-    Accept: 'application/json',
-    Authorization: 'Basic ' + btoa(routes.OAUTH.CLIENT_ID + ":" + routes.OAUTH.CLIENT_SECRET)
-}
-
 export const getStudentListById = (TeacherId, type = 'availabilityId') => {
     // return axios.get(`${routes.SERVER_ADDRESS}/teacher-availability/${TeacherId}/student-bookings`)
     return axios.get(`${routes.BOOKING}?${type}=${TeacherId}`)
@@ -366,7 +359,7 @@ export const deleteSchedule = (ids) => {
     let data = ids.split(',');
     let url = '';
     data.forEach((d, i) => {
-        if(i == data.length-1)
+        if(i === data.length-1)
             url += 'id='+d
         else 
             url += 'id='+d+'&'
@@ -380,7 +373,7 @@ export const deleteStudentProfiles = (ids) => {
     let data = ids.split(',');
     let url = '';
     data.forEach((d, i) => {
-        if(i == data.length-1)
+        if(i === data.length-1)
             url += 'id='+d
         else 
             url += 'id='+d+'&'
@@ -394,7 +387,7 @@ export const deleteTeacherProfile = (ids) => {
     let data = ids.split(',');
     let url = '';
     data.forEach((d, i) => {
-        if(i == data.length-1)
+        if(i === data.length-1)
             url += 'id='+d
         else 
             url += 'id='+d+'&'
@@ -408,7 +401,7 @@ export const deleteParents = (ids) => {
     let data = ids.split(',');
     let url = '';
     data.forEach((d, i) => {
-        if(i == data.length-1)
+        if(i === data.length-1)
             url += 'id='+d
         else 
             url += 'id='+d+'&'
@@ -422,7 +415,7 @@ export const deleteAvailabilities = (ids) => {
     let data = ids.split(',');
     let url = '';
     data.forEach((d, i) => {
-        if(i == data.length-1)
+        if(i === data.length-1)
             url += 'id='+d
         else 
             url += 'id='+d+'&'
@@ -436,7 +429,7 @@ export const deleteBookings = (ids) => {
     let data = ids.split(',');
     let url = '';
     data.forEach((d, i) => {
-        if(i == data.length-1)
+        if(i === data.length-1)
             url += 'id='+d
         else 
             url += 'id='+d+'&'

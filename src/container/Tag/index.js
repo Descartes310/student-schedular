@@ -51,9 +51,9 @@ export default function TagsList() {
                 return {
                     onClick: () => {
                         setSortingName("name");
-                        if (sortingType == "") { setSortingType("asc") }
-                        else if (sortingType == "asc") { setSortingType("desc") }
-                        else if (sortingType == "desc") { setSortingType("asc"); setSortingName("name"); }
+                        if (sortingType === "") { setSortingType("asc") }
+                        else if (sortingType === "asc") { setSortingType("desc") }
+                        else if (sortingType === "desc") { setSortingType("asc"); setSortingName("name"); }
                     }
                 };
             },
@@ -77,9 +77,9 @@ export default function TagsList() {
                 return {
                     onClick: () => {
                         setSortingName("url");
-                        if (sortingType == "") { setSortingType("asc") }
-                        else if (sortingType == "asc") { setSortingType("desc") }
-                        else if (sortingType == "desc") { setSortingType("asc"); setSortingName("url"); }
+                        if (sortingType === "") { setSortingType("asc") }
+                        else if (sortingType === "asc") { setSortingType("desc") }
+                        else if (sortingType === "desc") { setSortingType("asc"); setSortingName("url"); }
                     }
                 };
             },
@@ -152,7 +152,7 @@ export default function TagsList() {
         getListView();
         getTagList();
         
-        if(localStorage.getItem('currentTag') && localStorage.getItem('currentTag') != "no tag"){
+        if(localStorage.getItem('currentTag') && localStorage.getItem('currentTag') !== "no tag"){
             getTagByName(localStorage.getItem('currentTag')).then(res => {
                 setTag(res.content[0] ? res.content[0].name : '');
             })
@@ -216,7 +216,7 @@ export default function TagsList() {
         let tagsToDisable=[]
 
         selectedRow.forEach(tag => {
-            if(tag.enabled == true){
+            if(tag.enabled === true){
                 tagsToDisable.push(tag.id)
             }else{
                 tagsToEnable.push(tag.id)
@@ -301,7 +301,7 @@ export default function TagsList() {
                         />
                     </div>
                     {
-                       (selectedRow.length == 0) ? 
+                       (selectedRow.length === 0) ? 
                         (
                         <span></span>
                         ) 

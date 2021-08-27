@@ -9,7 +9,6 @@ const DateFilter = ({searchStudentListByDate}) => {
 
     const convertDate = (date, status) => {
         let result = new Date(date.target.value);
-        console.log(result)
         let day = result.getDate() < 10 ? '0'+(result.getDate()) : (result.getDate())
         let month = result.getMonth()+1 < 10 ? '0'+(result.getMonth()+1) : (result.getMonth()+1);
         let year = result.getFullYear();

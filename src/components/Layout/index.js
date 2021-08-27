@@ -3,17 +3,15 @@ import 'antd/dist/antd.css';
 import '../../Assets/Layout.css'
 import { useHistory } from 'react-router-dom'
 import { Layout, Menu } from 'antd';
-import { useSelector, useDispatch } from 'react-redux'
 import {
   UserOutlined,
-  VideoCameraOutlined,
   SettingOutlined,
-  MessageOutlined,
   LogoutOutlined,
-  SafetyOutlined,
   CalendarOutlined,
   BookOutlined,
-  TagsOutlined
+  TagsOutlined,
+  FileOutlined,
+  DatabaseOutlined
 } from '@ant-design/icons';
 
 const { Sider, Content } = Layout;
@@ -66,12 +64,12 @@ function LayoutOfApp({ children }, props) {
     let day = today.getDate() < 10 ? '0' + (today.getDate()) : (today.getDate())
     let month = today.getMonth() + 1 < 10 ? '0' + (today.getMonth() + 1) : (today.getMonth() + 1);
     let year = today.getFullYear();
-    if (localStorage.getItem('startDate') == null || localStorage.getItem('toStart') == null) {
+    if (localStorage.getItem('startDate') === null || localStorage.getItem('toStart') === null) {
       localStorage.setItem('startDate', year + '-' + month + '-' + day)
       localStorage.setItem('toStart', month + '%2F' + day + '%2F' + year + '%20' + today.getHours().toString().padStart(2, '0') + ':' + today.getMinutes().toString().padStart(2, '0') + ':00 -0500')
     }
 
-    if (localStorage.getItem('startTime') == null) {
+    if (localStorage.getItem('startTime') === null) {
       localStorage.setItem('startTime', today.getHours().toString().padStart(2, '0') + ':' + today.getMinutes().toString().padStart(2, '0'));
     }
 
@@ -81,17 +79,17 @@ function LayoutOfApp({ children }, props) {
     month = today.getMonth() + 1 < 10 ? '0' + (today.getMonth() + 1) : (today.getMonth() + 1);
     year = today.getFullYear();
 
-    if (localStorage.getItem('endDate') == null || localStorage.getItem('toEnd') == null) {
+    if (localStorage.getItem('endDate') === null || localStorage.getItem('toEnd') === null) {
       localStorage.setItem('endDate', year + '-' + month + '-' + day)
       localStorage.setItem('toEnd', month + '%2F' + day + '%2F' + year + '%20' + today.getHours().toString().padStart(2, '0') + ':' + today.getMinutes().toString().padStart(2, '0') + ':00 -0500')
 
     }
 
-    if (localStorage.getItem('endTime') == null) {
+    if (localStorage.getItem('endTime') === null) {
       localStorage.setItem('endTime', today.getHours().toString().padStart(2, '0') + ':' + today.getMinutes().toString().padStart(2, '0'));
     }
 
-    let expireAt = new Date(localStorage.getItem("expireAt"));
+    // let expireAt = new Date(localStorage.getItem("expireAt"));
 
     // if (localStorage.getItem("expireAt") == null) {
     //   setLogged(false);
@@ -159,6 +157,12 @@ function LayoutOfApp({ children }, props) {
               </Menu.Item>
               <Menu.Item key="tags" icon={<TagsOutlined />} onClick={() => { history.push('/tagList') }}>
                 Tags
+              </Menu.Item>
+              <Menu.Item key="subjects" icon={<FileOutlined />} onClick={() => { history.push('/subjects') }}>
+                Subjects
+              </Menu.Item>
+              <Menu.Item key="courses" icon={<DatabaseOutlined />} onClick={() => { history.push('/courses') }}>
+                Courses
               </Menu.Item>
             </Menu>
           </Sider> : null

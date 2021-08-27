@@ -3,51 +3,26 @@ import Moment from 'react-moment';
 import { useHistory } from 'react-router-dom';
 import { useLocation } from "react-router-dom";
 import '../../Assets/container/StudentList.css'
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import React, { useEffect, useState, useReducer } from 'react';
-import { PageHeader, Form, Input, Button, Select } from 'antd';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import { updateBooking, findTeacherListByFirstNameAndLastName, getCourses } from '../../services/Teacher';
-import { getStudentProfileByDate, getSchedule, assignStudentToAnotherTeacher, getTags } from '../../services/Student';
-
-const formReducer = (state, event) => {
-    return {
-        ...state,
-        [event.name]: event.value
-    }
-}
+import React, { useEffect, useState } from 'react';
+import { PageHeader, Form, Button, Select } from 'antd';
+import { updateBooking, getCourses } from '../../services/Teacher';
+import { getStudentProfileByDate, getSchedule } from '../../services/Student';
 
 function UpdateBooking() {
 
     const history = useHistory();
     const location = useLocation();
-    const [open, setOpen] = useState(false);
-    const [loadingS, setLoadingS] = useState(false);
-    const [student, setStudent] = useState(null);
-    const [data, setData] = useState(location.state.student);
-    const [course, setCourse] = useState(location.state.course);
-    const [comment, setComment] = useState('');
+    const [data] = useState(location.state.student);
     const [studentList, setStudentList] = useState([]);
-    const [children, setChildren] = useState(null);
     const [form] = Form.useForm();
     const [schedules, setSchedules] = useState([]);
     const [courses, setCourses] = useState([]);
-    const [subjects, setSubjects] = useState([]);
-    const [dates, setDates] = useState([]);
-    const [dat, setDat] = useState(null);
     const [subjec, setSubjec] = useState(null);
     const [submitting, setSubmitting] = useState(false);
-    const [teacher, setTeacher] = useState(null);
 
     useEffect(() => {
-        setChildren(data.studentProfile)
-        setTeacher(data.teacherAvailability)
         getAllCourses();
-        console.log("Course => ", course)
-        console.log("Student => ", data)
         setSubjec(data.schedule.id)
-        setDat(data.schedule.startDate)
         getStudents();
         getSchedule(data.studentProfile.grade, -1).then(data => {
             setSchedules(data.content)
@@ -66,12 +41,8 @@ function UpdateBooking() {
     }
 
     const changeChildren = (id) => {
-        setDates([]);
-        setSubjects([]);
-        setDat(null);
         setSubjec(null);
         let _children = studentList.filter(c => c.id === id)[0];
-        setChildren(_children);
         getSchedule(_children.grade ? _children.grade : 0, -1).then(data => {
             setSchedules(data.content)
 
@@ -80,8 +51,6 @@ function UpdateBooking() {
 
     const changeSubject = (subjectId) => {
         setSubjec(subjectId);
-        setDat(null);
-        setDates(schedules.filter(s => s.id === subjectId));
     }
 
     const handleSubmit = () => {
@@ -101,14 +70,13 @@ function UpdateBooking() {
     }
 
     const getStudents = () => {
-        setLoadingS(true);
         getStudentProfileByDate(localStorage.getItem('toStart'), localStorage.getItem('toEnd'), 0, 100, 'firstName', 'asc').then(data => {
             if (data) {
                 if (data.content) {
                     setStudentList(data.content);
                 }
             }
-        }).finally(() => setLoadingS(false))
+        })
     }
 
     return (

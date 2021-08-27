@@ -37,6 +37,14 @@ const TagList = React.lazy(() => import('./container/Tag'))
 const CreateTag = React.lazy(() => import('./container/Tag/create'))
 const UpdateTag = React.lazy(() => import('./container/Tag/update'))
 
+const SubjectList = React.lazy(() => import('./container/Subjects'))
+const CreateSubject = React.lazy(() => import('./container/Subjects/create'))
+const UpdateSubject = React.lazy(() => import('./container/Subjects/update'))
+
+const CourseList = React.lazy(() => import('./container/Courses'))
+const CreateCourse = React.lazy(() => import('./container/Courses/create'))
+const UpdateCourse = React.lazy(() => import('./container/Courses/update'))
+
 addToken();
 
 function App() {
@@ -77,6 +85,12 @@ function App() {
             <Route exact path="/tagList" name="Tag Page" render={props => <TagList {...props} />} />
             <Route exact path="/tag/add" name="Create Tag Page" render={props => <CreateTag {...props} />} />
             <Route exact path="/tag/:id/update" name="Update Tag Page" render={props => <UpdateTag {...props} />} />
+            <Route exact path="/subjects" name="Subjects Page" render={props => <SubjectList {...props} />} />
+            <Route exact path="/subjects/add" name="Create Subject Page" render={props => <CreateSubject {...props} />} />
+            <Route exact path="/subjects/:id/update" name="Update Subject Page" render={props => <UpdateSubject {...props} />} />
+            <Route exact path="/courses" name="Courses Page" render={props => <CourseList {...props} />} />
+            <Route exact path="/courses/add" name="Create Course Page" render={props => <CreateCourse {...props} />} />
+            <Route exact path="/courses/:id/update" name="Update Course Page" render={props => <UpdateCourse {...props} />} />
             {/* <Redirect from="/" to="/login" /> */}
           </React.Suspense>
         </LayoutOfApp>

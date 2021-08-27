@@ -67,7 +67,7 @@ function Tenant(props) {
   }
 
   const handleSubmit = () => {
-    if (name == null || url == null || conf == null || teacher == null || max == null) {
+    if (name === null || url === null || conf === null || teacher === null || max === null) {
       alert('Fill the form');
       return;
     }
