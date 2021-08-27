@@ -11,10 +11,9 @@ function StudentDetail(props) {
 
     const location = useLocation();
     const history = useHistory();
-    const { params } = props.match;
     const [bookings, setBookings] = useState([]);
     const [bookingsLoading, setBookingsLoading] = useState(true);
-    const [studentDetail, setStudentDetail] = useState(location.state.student);
+    const [studentDetail] = useState(location.state.student);
 
     useEffect(() => {
         getBooking(studentDetail.id).then(data => {
@@ -28,8 +27,8 @@ function StudentDetail(props) {
         setBookingsLoading(true);
         getStudentListById(location.state.student.id, 'profileId').then(data => {
             data.content.forEach(student => {
-                let elt = new Object();
-                elt.studentProfile = new Object();
+                let elt = {};
+                elt.studentProfile = {};
                 elt.studentProfile.firstName = student.studentProfile.firstName;
                 elt.studentProfile.grade = student.studentProfile.grade;
                 elt.studentProfile.lastName = student.studentProfile.lastName;

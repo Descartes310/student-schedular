@@ -13,7 +13,7 @@ const UpdateSubject = () => {
     const [name, setName] = useState('');
     const [language, setLanguage] = useState('');
     const [submitting, setSubmitting] = useState(false);
-    const [subject, setSubject] = useState(location.state.subject);
+    const [subject] = useState(location.state.subject);
 
     useEffect(() => {
         setName(subject.name);

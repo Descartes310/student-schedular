@@ -3,50 +3,31 @@ import { useHistory } from 'react-router-dom';
 import '../../Assets/container/StudentList.css';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import React, { useEffect, useState, useReducer } from 'react';
+import React, { useEffect, useState } from 'react';
 import { createBooking, getCourses } from '../../services/Teacher';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { PageHeader, Form, Input, Button, Table, Spin } from 'antd';
 import { VerticalAlignBottomOutlined, VerticalAlignTopOutlined } from "@ant-design/icons"
 import { getStudentProfileByDate, findStudentProfileByFirstNameAndLastName, getSchedule } from '../../services/Student'
 
-
-const formReducer = (state, event) => {
-    return {
-        ...state,
-        [event.name]: event.value
-    }
-}
-
 function CreateBooking() {
 
     const history = useHistory();
     const [form] = Form.useForm();
-    const [dat, setDat] = useState(null);
-    const [dates, setDates] = useState([]);
     const [open, setOpen] = useState(false);
-    const [subjec, setSubjec] = useState(null);
     const [comment, setComment] = useState('');
     const [courses, setCourses] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [subjects, setSubjects] = useState([]);
     const [student, setStudent] = useState(null);
-    const [gradeMin, setGradeMin] = useState("0");
     const [schedules, setSchedules] = useState([]);
     const [children, setChildren] = useState(null);
     const [schedule, setSchedule] = useState(null);
     const [loadingS, setLoadingS] = useState(false);
-    const [gradeMax, setGradeMax] = useState("100");
     const [selectedRow, setSelectedRow] = useState([]);
     const [studentList, setStudentList] = useState([]);
     const [submitting, setSubmitting] = useState(false);
     const [sortingType, setSortingType] = useState("desc");
-    const [formData, setFormData] = useReducer(formReducer, {});
     const [sortingName, setSortingName] = useState("createDate");
-
-    const [open1, setOpen1] = useState(false);
-    const [tagsList, setTagsList] = useState([]);
-    const [tags, setTags] = useState([]);
 
     const [tableProps, setTableProps] = useState({
         totalCount: 0,
@@ -97,10 +78,6 @@ function CreateBooking() {
     }, [sortingType, sortingName, tableProps.pageIndex]);
 
     const changeChildren = (value) => {
-        setDates([]);
-        setSubjects([]);
-        setDat(null);
-        setSubjec(null);
         if (value === null) {
             setChildren(null)
         }
@@ -115,7 +92,6 @@ function CreateBooking() {
             data.content = new Array();
             for (var key in obj)
                 data.content.push(obj[key]);
-            setSubjects(data.content)
         });
     }
 

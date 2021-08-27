@@ -13,7 +13,6 @@ export default function SubjectsList() {
 
     const [sortingName, setSortingName] = useState("name");
     const [sortingType, setSortingType] = useState("desc");
-    const [selectedRow, setSelectedRow] = useState([]);
 
     const [tableProps, setTableProps] = useState({
         totalCount: 0,
@@ -39,9 +38,9 @@ export default function SubjectsList() {
                 return {
                     onClick: () => {
                         setSortingName("name");
-                        if (sortingType == "") { setSortingType("asc") }
-                        else if (sortingType == "asc") { setSortingType("desc") }
-                        else if (sortingType == "desc") { setSortingType("asc"); setSortingName("name"); }
+                        if (sortingType === "") { setSortingType("asc") }
+                        else if (sortingType === "asc") { setSortingType("desc") }
+                        else if (sortingType === "desc") { setSortingType("asc"); setSortingName("name"); }
                     }
                 };
             },

@@ -25,7 +25,7 @@ function UpdateSchedule() {
     const [courseId, setCourseId] = useState(null);
     const [repeatPeriod, setRepeatPeriod] = useState();
     const [submitting, setSubmitting] = useState(false);
-    const [schedule, setSchedule] = useState(location.state.schedule);
+    const [schedule] = useState(location.state.schedule);
 
     useEffect(() => {
         console.log(schedule);

@@ -9,21 +9,11 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { getSubjects } from '../../services/Teacher';
 import { createCourse } from '../../services/Course';
 
-const { TextArea } = Input;
-
-const formReducer = (state, event) => {
-    return {
-        ...state,
-        [event.name]: event.value
-    }
-}
-
 function CreateCourse() {
 
     const history = useHistory();
     const [form] = Form.useForm();
     const [open, setOpen] = useState(false);
-    const [grade, setGrade] = useState(null);
     const [loading, setLoading] = useState(false);
     const [submitting, setSubmitting] = useState(false);
 

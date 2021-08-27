@@ -104,10 +104,7 @@ function ShortMessageList(props) {
 
     useEffect(() => {
         getListView();
-    }, [tableProps.pageIndex]);
-    useEffect(() => {
-        getListView();
-    }, [sortingType, sortingName]);
+    }, [tableProps.pageIndex, sortingType, sortingName]);
 
     const getListView = () => {
         if (search.firstName === "" && search.lastName === "") {

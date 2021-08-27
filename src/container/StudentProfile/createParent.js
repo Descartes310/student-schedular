@@ -22,7 +22,6 @@ function CreateParent() {
     const [country, setCountry] = useState(null)
     const [phone, setPhone] = useState('')
     const [code, setCode] = useState('')
-    const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useReducer(formReducer, {});
     const [form] = Form.useForm();
     const [submitting, setSubmitting] = useState(false);

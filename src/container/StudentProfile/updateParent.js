@@ -22,10 +22,9 @@ function UpdateParent() {
     const history = useHistory();
     const location = useLocation();
     const [country, setCountry] = useState(null)
-    const [parent, setParent] = useState(location.state.parent)
+    const [parent] = useState(location.state.parent)
     const [phone, setPhone] = useState('')
     const [code, setCode] = useState('')
-    const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useReducer(formReducer, {});
     const [form] = Form.useForm();
     const [submitting, setSubmitting] = useState(false);

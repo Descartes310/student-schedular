@@ -4,12 +4,10 @@ import { useHistory } from 'react-router-dom';
 import '../../Assets/container/StudentList.css';
 import React, { useEffect, useState } from 'react';
 import { getCourses } from '../../services/Teacher';
-import { Table, PageHeader, Button, Spin, Typography } from 'antd';
+import { Table, PageHeader, Button, Spin } from 'antd';
 import SearchFilter from '../../components/StudentList/SearchFilter';
 import { findScheduleByGrade, getScheduleByDate, deleteSchedule } from '../../services/Student'
 import { VerticalAlignBottomOutlined, VerticalAlignTopOutlined, PlusOutlined, DeleteOutlined, EditOutlined } from "@ant-design/icons"
-
-const { Text } = Typography;
 
 function Schedule() {
     const history = useHistory();
@@ -20,7 +18,7 @@ function Schedule() {
     const [selectedRow, setSelectedRow] = useState([]);
     const [sortingType, setSortingType] = useState("desc");
     const [sortingName, setSortingName] = useState("createDate");
-    const [advanceSchedule, setAdvanceSchedule] = useState(false);
+    const [advanceSchedule] = useState(false);
 
     const deletingStatus = useSelector((state) => {
         return state.Student.enableDeleting;

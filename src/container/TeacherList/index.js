@@ -147,6 +147,7 @@ function TeacherList() {
         setTeacherProfiles([]);
         datas.map(t => {
             getProfile(t.teacherProfile.id);
+            return null;
         });
     }, [teacherList]);
 
@@ -303,9 +304,9 @@ function TeacherList() {
                             style={{ display: "flex", flexDirection: 'row', alignItems: "center" }}
                         >
                             <Tooltip title={"Online status"}>
-                                <FontAwesomeIcon icon={faCircle} color="green" style={{ display: teacherProfile.onlineStatus == 0 ? "block" : "none" }} />
-                                <FontAwesomeIcon icon={faCircle} color="orange" style={{ display: teacherProfile.onlineStatus == 1 ? "block" : "none" }} />
-                                <FontAwesomeIcon icon={faCircle} color="red" style={{ display: teacherProfile.onlineStatus == 2 ? "block" : "none" }} />
+                                <FontAwesomeIcon icon={faCircle} color="green" style={{ display: teacherProfile.onlineStatus === 0 ? "block" : "none" }} />
+                                <FontAwesomeIcon icon={faCircle} color="orange" style={{ display: teacherProfile.onlineStatus === 1 ? "block" : "none" }} />
+                                <FontAwesomeIcon icon={faCircle} color="red" style={{ display: teacherProfile.onlineStatus === 2 ? "block" : "none" }} />
                             </Tooltip>
 
                             <Tooltip title={teacherProfile.firstName + " " + teacherProfile.lastName}>
@@ -515,16 +516,19 @@ function TeacherList() {
                     e.stopPropagation();
                     let studentIdArray = [];
                     assignStudentList.map((student) => {
-                        studentIdArray.push(student.id)
+                        studentIdArray.push(student.id);
+                        return null;
                     })
                     studentIdArray.map(studentId => {
                         assignStudentToAnotherTeacher(record.id, studentId)
                         .then(res => {
                             setStudentList(null);
                             getListView();
-                        })
+                        });
+                        return null;
                     })
                     dispatch(assignStudents([]));
+                    return null;
                 }
                 return (
                     record.teacherProfile && (
@@ -635,14 +639,16 @@ function TeacherList() {
     const assigningStudents = (teacherId) => {
         let studentIdArray = [];
         selectedRowStudent.map((student) => {
-            studentIdArray.push(student.id)
+            studentIdArray.push(student.id);
+            return null;
         })
         studentIdArray.map(studentId => {
             assignStudentToAnotherTeacher(teacherId.id, studentId)
             .then(res => {
                 closeModal();
                 getListView();
-            })
+            });
+            return null;
         })
     }
 
@@ -688,7 +694,7 @@ function TeacherList() {
     }
 
     const changeSearch = (e) => {
-        const { name, value } = e.target;
+        const { value } = e.target;
         if (e.target.name === "name") {
             var nameData = value.trim().split(" ");
             if (nameData.length > 1) {

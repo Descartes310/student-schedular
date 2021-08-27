@@ -18,7 +18,7 @@ import { findTeacherListByFirstNameAndLastName, getCourses } from '../../service
 import { Table, PageHeader, Button, Spin, Tooltip, Row, Form, Input, Typography } from 'antd';
 import { VerticalAlignBottomOutlined, VerticalAlignTopOutlined, PlusOutlined, DeleteOutlined } from "@ant-design/icons";
 import {
-    findStudentListByFirstNameAndLastName, getParentProfile, getStudentListByDate, deleteStudentBooking, editSubject,
+    findStudentListByFirstNameAndLastName, getParentProfile, getStudentListByDate, editSubject,
     assignStudentToAnotherTeacher, deleteBookings, getSchedules
 } from '../../services/Student';
 
@@ -69,7 +69,8 @@ function StudentList() {
             console.log('selectedRowKeys changed: ', records);
             var recordIdArray = [];
             records.map(record => {
-                recordIdArray.push({ id: record.id, firstName: record.studentProfile.firstName, lastName: record.studentProfile.lastName })
+                recordIdArray.push({ id: record.id, firstName: record.studentProfile.firstName, lastName: record.studentProfile.lastName });
+                return recordIdArray;
             })
             setSelectedRow(recordIdArray);
             dispatch(assignStudents(recordIdArray));
@@ -159,9 +160,9 @@ function StudentList() {
                     style={{ display: "flex", flexDirection: 'row', alignItems: "center" }}
                 >
                     <Tooltip title={record.studentProfile.lastSeenRoom != null ? record.studentProfile.lastSeenRoom : "No last seen room"}>
-                        <FontAwesomeIcon icon={faCircle} color="green" style={{ display: record.studentProfile.onlineStatus == 0 ? "block" : "none" }} />
-                        <FontAwesomeIcon icon={faCircle} color="orange" style={{ display: record.studentProfile.onlineStatus == 1 ? "block" : "none" }} />
-                        <FontAwesomeIcon icon={faCircle} color="red" style={{ display: record.studentProfile.onlineStatus == 2 ? "block" : "none" }} />
+                        <FontAwesomeIcon icon={faCircle} color="green" style={{ display: record.studentProfile.onlineStatus === 0 ? "block" : "none" }} />
+                        <FontAwesomeIcon icon={faCircle} color="orange" style={{ display: record.studentProfile.onlineStatus === 1 ? "block" : "none" }} />
+                        <FontAwesomeIcon icon={faCircle} color="red" style={{ display: record.studentProfile.onlineStatus === 2 ? "block" : "none" }} />
                     </Tooltip>
                     <Tooltip title={(record.studentProfile.firstName + " " + record.studentProfile.lastName)}>
                         <Button
@@ -405,7 +406,7 @@ function StudentList() {
                                                 onChange={(e) => changeTeacherSearch(e)}
                                                 onKeyDown={(e) => {
                                                     if (e.key === 'Enter' && !open) {
-                                                        let teachers = teacherList.filter(t => t.teacherProfile.firstName + " " + t.teacherProfile.lastName == teacherName);
+                                                        let teachers = teacherList.filter(t => t.teacherProfile.firstName + " " + t.teacherProfile.lastName === teacherName);
                                                         if (teachers.length === 0) {
                                                             alert('This teacher is not found');
                                                         } else {
@@ -506,20 +507,20 @@ function StudentList() {
         return result < min ? result : min;
     }
 
-    const deleteBooking = (selectedrow) => {
-        if (selectedrow.length > 0) {
-            let ids = selectedrow.reduce((a, b) => {
-                return a + ',' + b.id;
-            }, '')
-            deleteStudentBooking(ids.substring(1)).then(data => {
-                console.log(data);
-                setSelectedRow([]);
-                getListView();
-            });
-        } else {
-            alert('Select at least one student');
-        }
-    }
+    // const deleteBooking = (selectedrow) => {
+    //     if (selectedrow.length > 0) {
+    //         let ids = selectedrow.reduce((a, b) => {
+    //             return a + ',' + b.id;
+    //         }, '')
+    //         deleteStudentBooking(ids.substring(1)).then(data => {
+    //             console.log(data);
+    //             setSelectedRow([]);
+    //             getListView();
+    //         });
+    //     } else {
+    //         alert('Select at least one student');
+    //     }
+    // }
 
     const getListView = () => {
         if (search.firstName === "" && search.lastName === "" && (localStorage.getItem('currentTag') === "no tag" || localStorage.getItem('currentTag') === "")) {
@@ -655,7 +656,7 @@ function StudentList() {
 
         <div onClick={(e) => {
             console.log(e.target.viewBox)
-            if (e.target.viewBox != undefined) {
+            if (e.target.viewBox !== undefined) {
                 if (editTeacher.length > 0) {
                 }
             } else if (!e.target.id.includes('asynchronous-search') && editTeacher.length > 0) {

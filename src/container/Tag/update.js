@@ -9,7 +9,7 @@ const UpdateTag = () => {
 
     const history = useHistory();
     const location = useLocation();
-    const [tag, setTag] = useState(location.state.tag);
+    const [tag] = useState(location.state.tag);
     const [name, setName] = useState("");
     const [url, setUrl] = useState("");
 
@@ -18,7 +18,6 @@ const UpdateTag = () => {
     const [submitting, setSubmitting] = useState(false);
 
     useEffect(() => {
-        console.log(tag)
         setName(tag.name);
         setEnabled(tag.enabled);
         setUrl(tag.url);

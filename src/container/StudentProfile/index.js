@@ -1,5 +1,4 @@
 import 'antd/dist/antd.css';
-import Moment from 'react-moment';
 import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import '../../Assets/container/StudentList.css'
@@ -8,7 +7,7 @@ import React, { useEffect, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import SearchFilter from '../../components/StudentList/SearchFilter'
 import { Table, PageHeader, Button, Spin, Tooltip, Typography } from 'antd';
-import { faCircle, faCoffee, faCommentAlt } from '@fortawesome/free-solid-svg-icons'
+import { faCircle } from '@fortawesome/free-solid-svg-icons'
 import { VerticalAlignBottomOutlined, VerticalAlignTopOutlined, PlusOutlined, DeleteOutlined, EditOutlined } from "@ant-design/icons"
 import { findStudentProfileByFirstNameAndLastName, getStudentProfileByDate, deleteStudentProfiles, sendStudentsMessage, getParentProfile } from '../../services/Student'
 
@@ -17,7 +16,7 @@ const { Text } = Typography;
 function StudentProfile() {
     const history = useHistory();
     const [parents, setParents] = useState([]);
-    const [mess_id, setMess_id] = useState("s1");
+    const [mess_id] = useState("s1");
     const [studentList, setStudentList] = useState();
     const [sortingType, setSortingType] = useState("desc");
     const [sortingName, setSortingName] = useState("createDate");
@@ -91,9 +90,9 @@ function StudentProfile() {
                     style={{ display: "flex", flexDirection: 'row', alignItems: "center" }}
                 >
                     <Tooltip title={record.lastSeenRoom != null ? record.lastSeenRoom : "No last seen room"}>
-                        <FontAwesomeIcon icon={faCircle} color="green" style={{ display: record.onlineStatus == 0 ? "block" : "none" }} />
-                        <FontAwesomeIcon icon={faCircle} color="orange" style={{ display: record.onlineStatus == 1 ? "block" : "none" }} />
-                        <FontAwesomeIcon icon={faCircle} color="red" style={{ display: record.onlineStatus == 2 ? "block" : "none" }} />
+                        <FontAwesomeIcon icon={faCircle} color="green" style={{ display: record.onlineStatus === 0 ? "block" : "none" }} />
+                        <FontAwesomeIcon icon={faCircle} color="orange" style={{ display: record.onlineStatus === 1 ? "block" : "none" }} />
+                        <FontAwesomeIcon icon={faCircle} color="red" style={{ display: record.onlineStatus === 2 ? "block" : "none" }} />
                     </Tooltip>
                     <Tooltip title={(record.firstName + " " + record.lastName)}>
                         <Button
@@ -141,9 +140,9 @@ function StudentProfile() {
                 return {
                     onClick: () => {
                         setSortingName("email");
-                        if (sortingType == "") { setSortingType("asc") }
-                        else if (sortingType == "asc") { setSortingType("desc") }
-                        else if (sortingType == "desc") { setSortingType("asc"); setSortingName("email"); }
+                        if (sortingType === "") { setSortingType("asc") }
+                        else if (sortingType === "asc") { setSortingType("desc") }
+                        else if (sortingType === "desc") { setSortingType("asc"); setSortingName("email"); }
                     }
                 };
             },

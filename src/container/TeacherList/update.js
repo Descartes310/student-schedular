@@ -28,7 +28,7 @@ function CreateAvailibility() {
     const [dat, setDat] = useState(null);
     const [endDate, setEndDate] = useState(null);
     const [submitting, setSubmitting] = useState(false);
-    const [teacher, setTeacher] = useState(location.state.teacher);
+    const [teacher] = useState(location.state.teacher);
 
     useEffect(() => {
         setChildren(teacher.teacherProfile);

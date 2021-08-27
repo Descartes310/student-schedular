@@ -11,20 +11,18 @@ import { faCircle } from '@fortawesome/free-solid-svg-icons';
 import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { assignStudents } from '../../Action-Reducer/Student/action';
-import { Table, PageHeader, Button, Spin, Tooltip, Typography } from 'antd';
+import { Table, PageHeader, Button, Spin, Tooltip } from 'antd';
 import { faCrown, faShieldAlt, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import { assignStudentToAnotherTeacher, assignMeetingToAnotherTeacher, findTeacherProfileByFirstNameAndLastName } from '../../services/Student';
 import { markTeacherAsPresent, markAsSupervisor, markAsAdmin, markAsApproved, updateAvailabilityAssistants, getSubjectById, removeAvailabilityAssistants } from '../../services/Teacher';
-
-const { Text } = Typography;
 
 function StudentListOfTeacher(props) {
 
     const dispatch = useDispatch();
     const location = useLocation();
     const [teacher, setTeacher] = useState(location.state.teacher);
-    const [profile, setProfile] = useState(location.state.profile);
-    const [teacherProfile, setTeacherProfile] = useState(location.state.teacherProfile);
+    const [profile] = useState(location.state.profile);
+    const [teacherProfile] = useState(location.state.teacherProfile);
     const { params } = props.match;
     const [studentList, setStudentList] = useState();
     const [confUrl, setConfUrl] = useState();
@@ -39,17 +37,15 @@ function StudentListOfTeacher(props) {
     const [open, setOpen] = useState(false);
     const [present, setPresent] = useState(true);
     const [profileLoading, setProfileLoading] = useState(true)
-    const [startDate, setStartDate] = useState('');
+    const [startDate] = useState('');
     const [effectiveStartDate, setEffectiveStartDate] = useState('');
     const [selectedRow, setSelectedRow] = useState([]);
-    const [selectedRowProfile, setSelectedRowProfile] = useState([]);
     const assignStudentList = useSelector((state) => {
         return state.Student.assignStudent;
     })
     const [teacherList, setTeacherList] = useState([]);
-    const [sortingName, setSortingName] = useState("createDate");
-    const [sortingType, setSortingType] = useState("desc");
-    const [loading, setLoading] = useState(false);
+    const [sortingName] = useState("createDate");
+    const [sortingType] = useState("desc");
     const [tableProps, setTableProps] = useState({
         totalCount: 0,
         pageIndex: 0,
@@ -87,7 +83,7 @@ function StudentListOfTeacher(props) {
                 console.log(err)
             });
         } else {
-            newAssistants = newAssistants.filter(a => data.id != a.id);
+            newAssistants = newAssistants.filter(a => data.id !== a.id);
             removeAvailabilityAssistants(teacher.id, data.id).then(resp => {
                 setAssistants([...newAssistants]);
                 setIsAddingAssistants(false);
@@ -145,7 +141,6 @@ function StudentListOfTeacher(props) {
                     pageSize: 30,
                 });
             }
-            setLoading(false);
             setProfileLoading(false);
         })
     }
@@ -174,7 +169,8 @@ function StudentListOfTeacher(props) {
             var recordIdArray = [];
             setActive(false);
             records.map(record => {
-                recordIdArray.push({ id: record.id, firstName: record.firstName, lastName: record.lastName })
+                recordIdArray.push({ id: record.id, firstName: record.firstName, lastName: record.lastName });
+                return null;
             })
             setSelectedRow(recordIdArray);
             dispatch(assignStudents(recordIdArray))
@@ -185,9 +181,9 @@ function StudentListOfTeacher(props) {
         setAssistants(teacher.assistants ? teacher.assistants : []);
         let sd = teacher.createDate;
         let date = (new Date(sd)).toLocaleDateString();
-        console.log(teacher)
         teacherProfile.subjects.map(s => {
             getSubject(s.id);
+            return null;
         })
         setPresent(teacher.effectiveStartDate ? false : true);
         //setEffectiveStartDate(teacher.effectiveStartDate);
@@ -195,18 +191,6 @@ function StudentListOfTeacher(props) {
         getListView();
         getListProfiles();
     }, []);
-
-    const rowSelectionProfile = {
-        selectedRowProfile,
-        onChange: (__, records) => {
-            var recordIdArray = [];
-            records.map(record => {
-                recordIdArray.push(record)
-            })
-            setSelectedRowProfile(recordIdArray);
-        }
-    };
-
 
     const columns = [
         {
@@ -216,7 +200,7 @@ function StudentListOfTeacher(props) {
                 <div
                     style={{ display: "flex", flexDirection: 'row', alignItems: "center" }}
                 >
-                    <Tooltip title={record.lastSeenRoom != null ? record.lastSeenRoom : "No last seen room"}>
+                    <Tooltip title={record.lastSeenRoom !== null ? record.lastSeenRoom : "No last seen room"}>
                         <FontAwesomeIcon icon={faCircle} color="green" style={{ display: record.onlineStatus === 0 ? "block" : "none" }} />
                         <FontAwesomeIcon icon={faCircle} color="orange" style={{ display: record.onlineStatus === 1 ? "block" : "none" }} />
                         <FontAwesomeIcon icon={faCircle} color="red" style={{ display: record.onlineStatus === 2 ? "block" : "none" }} />
@@ -255,7 +239,7 @@ function StudentListOfTeacher(props) {
                 <div
                     style={{ display: "flex", flexDirection: 'row', alignItems: "center" }}
                 >
-                    <Tooltip title={record.lastSeenRoom != null ? record.lastSeenRoom : "No last seen room"}>
+                    <Tooltip title={record.lastSeenRoom !== null ? record.lastSeenRoom : "No last seen room"}>
                         <FontAwesomeIcon icon={faCircle} color="green" style={{ display: record.onlineStatus === 0 ? "block" : "none" }} />
                         <FontAwesomeIcon icon={faCircle} color="orange" style={{ display: record.onlineStatus === 1 ? "block" : "none" }} />
                         <FontAwesomeIcon icon={faCircle} color="red" style={{ display: record.onlineStatus === 2 ? "block" : "none" }} />
@@ -338,7 +322,7 @@ function StudentListOfTeacher(props) {
                 <div
                     style={{ display: "flex", flexDirection: 'row', alignItems: "center" }}
                 >
-                    <Tooltip title={record.lastSeenRoom != null ? record.lastSeenRoom : "No last seen room"}>
+                    <Tooltip title={record.lastSeenRoom !== null ? record.lastSeenRoom : "No last seen room"}>
                         <FontAwesomeIcon icon={faCircle} color="green" style={{ display: record.onlineStatus === 0 ? "block" : "none" }} />
                         <FontAwesomeIcon icon={faCircle} color="orange" style={{ display: record.onlineStatus === 1 ? "block" : "none" }} />
                         <FontAwesomeIcon icon={faCircle} color="red" style={{ display: record.onlineStatus === 2 ? "block" : "none" }} />
@@ -425,8 +409,8 @@ function StudentListOfTeacher(props) {
                 setStudentList(data.content);
                 data.content.forEach(student => {
                     let datas = studentsTmp ? studentsTmp : [];
-                    let elt = new Object();
-                    elt.studentProfile = new Object();
+                    let elt = {};
+                    elt.studentProfile = {};
                     elt.studentProfile.firstName = student.studentProfile.firstName;
                     elt.studentProfile.grade = student.studentProfile.grade;
                     elt.studentProfile.lastName = student.studentProfile.lastName;
@@ -454,15 +438,16 @@ function StudentListOfTeacher(props) {
         if (!active) {
             let studentIdArray = [];
             assignStudentList.map((student) => {
-                studentIdArray.push(student.id)
+                studentIdArray.push(student.id);
+                return null;
             })
             studentIdArray.map(studentId => {
-                console.log(studentId);
                 assignStudentToAnotherTeacher(params.id, studentId)
                 .then(res => {
                     setStudentList(null);
                     getListView();
-                })
+                });
+                return null
             })
 
             dispatch(assignStudents([]));
