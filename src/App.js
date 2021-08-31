@@ -10,7 +10,7 @@ const Code = React.lazy(() => import('./container/Login/code'));
 const StudentList = React.lazy(() => import('./container/StudentList'));
 const StudentProfile = React.lazy(() => import('./container/StudentProfile'));
 const TeacherProfile = React.lazy(() => import('./container/TeacherProfile'));
-// const Settings = React.lazy(() => import('./container/StudentList/Settings'));
+const Settings = React.lazy(() => import('./container/StudentList/Settings'));
 // const Tenant = React.lazy(() => import('./container/StudentList/Tenant'));
 const ShortMessages = React.lazy(() => import('./container/StudentList/shortMessages'));
 const StudentsOfTeacher = React.lazy(() => import('./container/TeacherList/StudentListOfTeacher'));
@@ -71,7 +71,7 @@ function App() {
             <Route exact path="/teacherprofiles" name="Teacher Page" render={props => <TeacherProfile {...props} />} />
             <Route exact path="/teacherprofiles/add" name="Create Teacher Page" render={props => <CreateTeacher {...props} />} />
             <Route exact path="/teacherprofiles/:id/update" name="Create Teacher Page" render={props => <UpdateTeacher {...props} />} />
-            {/* <Route exact path="/settings" name="Settings Page" render={props => <Settings {...props} />} /> */}
+            <Route exact path="/settings" name="Settings Page" render={props => <Settings {...props} />} />
             {/* <Route exact path="/tenant" name="Tenant Page" render={props => <Tenant {...props} />} /> */}
             <Route exact path="/short-messages/:id" name="Settings Page" render={props => <ShortMessages {...props} />} />
             <Route exact path="/messages/add/:id" name="Add messages Page" render={props => <CreateMessage {...props} />} />

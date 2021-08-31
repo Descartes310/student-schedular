@@ -38,7 +38,7 @@ function LayoutOfApp({ children }, props) {
 
       document.getElementById('root').style.height = '100%';
 
-      if (localStorage.getItem('user')) {
+      if (JSON.parse(localStorage.getItem('user'))) {
         // let user = JSON.parse(localStorage.getItem('user'));
         // let tenant = localStorage.getItem('tenant' + user.id);
         // if (!tenant) {

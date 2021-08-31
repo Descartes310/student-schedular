@@ -256,7 +256,8 @@ export const markTeacherAsPresent = (teacherIds, value) => {
 }
 
 export const getTeacherProfile = (email = null) => {
-    email = email == null ? JSON.parse(localStorage.getItem("email")) : email;
+    console.log()
+    email = email == null ? JSON.parse(localStorage.getItem("user")).email : email;
     return axios.get(`${routes.TEACHER}/email/${email}`)
         .then(res => {
             return res.data;
@@ -454,15 +455,15 @@ export const approveComment = (c) => {
 
 export const updateTeacher = (id, firstName, lastName, email, grades, subjects, phone, schoolName, schoolBoard, tags) => {
     let data = {
-        firstName,
         lastName,
+        firstName,
         schoolName,
+        tags: tags,
         schoolBoard,
-        externalEmail: email,
         grades: grades,
         phoneNumber: phone,
-        subjects: subjects,
-        tags: tags
+        externalEmail: email,
+        subjects: subjects.map(s => { return {id: s}} )
     }
     return axios.patch(`${routes.TEACHER}/${id}`, data).then(res => {
         return res;
