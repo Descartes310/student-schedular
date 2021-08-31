@@ -2,10 +2,10 @@ import PhoneInput from 'react-phone-input-2';
 import { useHistory } from 'react-router-dom';
 import 'react-phone-input-2/lib/bootstrap.css';
 import "react-phone-input-2/lib/bootstrap.css";
+import React, { useState, useEffect } from 'react';
 import { getCountry } from '../../services/Student';
 import { useSelector, useDispatch } from 'react-redux';
-import { getTeacherProfile } from '../../services/Teacher';
-import React, { useState, useEffect } from 'react';
+import { getTeacherProfileById } from '../../services/Teacher';
 import { PageHeader, Button, Select, Form, Input } from 'antd';
 import { bridgeManagement, getTags } from '../../services/Student';
 import { updateTeacher, getSubjects } from '../../services/Teacher';
@@ -75,17 +75,19 @@ function Settings(props) {
   }, []);
 
   const getTeacher = () => {
-    getTeacherProfile().then(data => {
-      setTeacher(data);
+    let user = JSON.parse(localStorage.getItem("user"));
+    getTeacherProfileById(user.id).then(data => {
       localStorage.setItem('user', JSON.stringify(data));
-      setAdmin(getRole('admin', data))
+      setTeacher(data);
+      // setAdmin(getRole('admin', data))
       setLastName(data.lastName);
       setFirstName(data.firstName);
       setSchool(data.schoolName ? data.schoolName : '');
       setPhone(data.phoneNumber ? data.phoneNumber : '')
       setBoard(data.schoolBoard ? data.schoolBoard : '');
-      setEmail(data.externalEmail);
+      setEmail(data.email);
       setGrades(data.grades ? data.grades : []);
+      console.log(data.subjects)
       setSubjects(data.subjects ? data.subjects : []);
     });
   }
@@ -353,7 +355,7 @@ function Settings(props) {
                   onClick={() => setOpen2(open2 ? false : true)}>
                   <Select mode="multiple"
                     allowClear
-                    value={subjects}
+                    defaultValue={subjects}
                     open={open2}
                     onFocus={() => setOpen2(true)}
                     onBlur={() => setOpen2(false)}
@@ -364,7 +366,7 @@ function Settings(props) {
                     {
                       subjectsList.map(subject => {
                         return (
-                          <Select.Option value={subject.subject} key={subject.id}>{subject.subject}</Select.Option>
+                          <Select.Option value={subject.id} key={subject.id}>{subject.name}</Select.Option>
                         )
                       })
                     }

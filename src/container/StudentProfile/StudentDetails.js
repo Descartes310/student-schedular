@@ -9,8 +9,8 @@ import { faCircle } from '@fortawesome/free-solid-svg-icons'
 
 function StudentDetail(props) {
 
-    const location = useLocation();
     const history = useHistory();
+    const location = useLocation();
     const [bookings, setBookings] = useState([]);
     const [bookingsLoading, setBookingsLoading] = useState(true);
     const [studentDetail] = useState(location.state.student);

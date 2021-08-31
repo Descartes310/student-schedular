@@ -50,7 +50,7 @@ function AddMessage(props) {
     }
 
     const handleSubmit = () => {
-        if (body === null || selectedRecipients.length <= 0) {
+        if (body == null || selectedRecipients.length <= 0) {
             alert('Fill the form');
             return;
         }

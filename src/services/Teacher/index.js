@@ -166,7 +166,7 @@ export const getTenantByName = (displayName, page, size) => {
 }
 
 export const getTeacherListByDate = (start, end, page, size, sortName = 'firstName', sortType = 'asc') => {
-    if (start === null || end === null) {
+    if (start == null || end == null) {
         let today = new Date();
         today.setDate(today.getDate() - 1)
         let day = today.getDate() < 10 ? '0' + (today.getDate()) : (today.getDate())
@@ -175,13 +175,13 @@ export const getTeacherListByDate = (start, end, page, size, sortName = 'firstNa
         let hours = today.getHours().toString().padStart(2, '0');
         let minutes = today.getMinutes().toString().padStart(2, '0');
 
-        if (localStorage.getItem('startDate') === null || localStorage.getItem('toStart') === null) {
+        if (localStorage.getItem('startDate') == null || localStorage.getItem('toStart') == null) {
             localStorage.setItem('startDate', year + '-' + month + '-' + day)
             localStorage.setItem('toStart', month + '%2F' + day + '%2F' + year + '%20' + hours + ':' + minutes + ':00 -0500')
             start = month + '%2F' + day + '%2F' + year + '%20' + hours + ':' + minutes + ':00 -0500';
         }
 
-        if (localStorage.getItem('startTime') === null) {
+        if (localStorage.getItem('startTime') == null) {
             localStorage.setItem('startTime', today.getHours().toString().padStart(2, '0') + ':' + today.getMinutes().toString().padStart(2, '0'));
         }
 
@@ -193,14 +193,14 @@ export const getTeacherListByDate = (start, end, page, size, sortName = 'firstNa
         hours = today.getHours().toString().padStart(2, '0');
         minutes = today.getMinutes().toString().padStart(2, '0');
 
-        if (localStorage.getItem('endDate') === null || localStorage.getItem('toEnd') === null) {
+        if (localStorage.getItem('endDate') == null || localStorage.getItem('toEnd') == null) {
             localStorage.setItem('endDate', year + '-' + month + '-' + day)
             localStorage.setItem('toEnd', month + '%2F' + day + '%2F' + year + '%20' + hours + ':' + minutes + ':00 -0500')
             end = month + '%2F' + day + '%2F' + year + '%20' + hours + ':' + minutes + ':00 -0500';
 
         }
 
-        if (localStorage.getItem('endTime') === null) {
+        if (localStorage.getItem('endTime') == null) {
             localStorage.setItem('endTime', today.getHours().toString().padStart(2, '0') + ':' + today.getMinutes().toString().padStart(2, '0'));
         }
 
@@ -256,7 +256,8 @@ export const markTeacherAsPresent = (teacherIds, value) => {
 }
 
 export const getTeacherProfile = (email = null) => {
-    email = email == null ? JSON.parse(localStorage.getItem("email")) : email;
+    console.log()
+    email = email == null ? JSON.parse(localStorage.getItem("user")).email : email;
     return axios.get(`${routes.TEACHER}/email/${email}`)
         .then(res => {
             return res.data;
@@ -404,14 +405,14 @@ export const createTeacher = (firstName, lastName, iemail, schoolName, schoolBoa
     }).catch(err => console.log(err));
 }
 
-//TODO: replace the commenter id by connected user
 export const createComment = (studentBooking, content) => {
+    let user = JSON.parse(localStorage.getItem('user'));
     let data = {
         content,
         studentBooking,
         studentParent: studentBooking.parent,
         studentProfile: studentBooking.studentProfile,
-        commenter: { id: '8a0081ed7b1d0a57017b1e706ed8003b' }
+        commenter: { id: user.id }
     }
     return axios.post(`${routes.COMMENT}`, data).then(res => {
         return res;
@@ -433,18 +434,18 @@ export const updateComment = (id, content) => {
     }).catch(err => console.log(err));
 }
 
-//TODO: replace the commenter id by connected user
 export const approveComment = (c) => {
+    let user = JSON.parse(localStorage.getItem('user'));
     let data = {
         ...c,
-        approver: { id: '8a0081ed7b1d0a57017b1e706ed8003b' }
+        approver: { id: user.id }
     }
     if (c.approver) {
         return axios.delete(`${routes.COMMENT}/${c.id}/approval`).then(res => {
             return res;
         }).catch(err => console.log(err));
     } else {
-        return axios.post(`${routes.COMMENT}/${c.id}/approval/${'8a0081ed7b1d0a57017b1e706ed8003b'}`, data).then(res => {
+        return axios.post(`${routes.COMMENT}/${c.id}/approval/${user.id}`, data).then(res => {
             return res;
         }).catch(err => console.log(err));
     }
@@ -454,15 +455,15 @@ export const approveComment = (c) => {
 
 export const updateTeacher = (id, firstName, lastName, email, grades, subjects, phone, schoolName, schoolBoard, tags) => {
     let data = {
-        firstName,
         lastName,
+        firstName,
         schoolName,
+        tags: tags,
         schoolBoard,
-        externalEmail: email,
         grades: grades,
         phoneNumber: phone,
-        subjects: subjects,
-        tags: tags
+        externalEmail: email,
+        subjects: subjects.map(s => { return {id: s}} )
     }
     return axios.patch(`${routes.TEACHER}/${id}`, data).then(res => {
         return res;
@@ -569,5 +570,17 @@ export const updateAvailabilityAssistants = (availability_id, assistant_id) => {
 export const removeAvailabilityAssistants = (availability_id, assistant_id) => {
     return axios.delete(`${routes.AVAILABILITY}/${availability_id}/assistant/${assistant_id}`).then(res => {
         return res;
+    }).catch(err => console.log(err));
+}
+
+export const getLoginCode = (phoneNumber) => {
+    return axios.get(`${routes.TEACHER}/token?phoneNumber=${phoneNumber}`).then(res => {
+        return res.data;
+    }).catch(err => console.log(err));
+}
+
+export const sendLoginCode = (phoneNumber, activationCode) => {
+    return axios.get(`${routes.TEACHER}/activate/${phoneNumber}?activationCode=${activationCode}`).then(res => {
+        return res.data;
     }).catch(err => console.log(err));
 }

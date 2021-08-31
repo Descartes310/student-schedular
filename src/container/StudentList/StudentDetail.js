@@ -85,7 +85,7 @@ function StudentDetail(props) {
     }
 
     const handleSubmit = () => {
-        if (comment === null) {
+        if (comment == null) {
             createComment(studentDetail, content).then(data => {
                 // history.push('/studentlist')
                 setContent('');

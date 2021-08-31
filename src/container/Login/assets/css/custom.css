@@ -5,7 +5,7 @@
 .loginBox__inner { text-align: center; }
 .loginBox__title { padding: 0rem 0 2.5rem; color: #ffffff; font-size: 2.85rem; line-height: 3.5rem; }
 .loginBox__btn-wrapper { text-align: center; }
-.loginBox__btn { margin: 0.75rem; padding: 0.5rem 1.5rem 0.5rem 0.5rem; transition: all 0.3s; cursor: pointer; white-space: nowrap; min-width: 21rem; font-size: 1.5rem; border: medium none; border: 0.3125rem solid rgba(0,0,0,0.3); border-radius: 5rem; display: inline-block; }
+.loginBox__btn { margin: 0.75rem; padding: 0.5rem 1.5rem 0.5rem 0.5rem; transition: all 0.3s; white-space: nowrap; min-width: 21rem; font-size: 1.5rem; border: medium none; border: 0.3125rem solid rgba(0,0,0,0.3); border-radius: 5rem; display: inline-block; }
 .loginBox__btn img { display: inline-block; width: 2.25rem; vertical-align: middle; margin-right: 1.25rem; }
 .loginBox__btn span { display: inline-block; vertical-align: middle; }
 .loginBox__btn:hover, .loginBox__btn:focus { border-color: rgba(255,255,255,0.3); outline: none; }

@@ -38,23 +38,30 @@ function LayoutOfApp({ children }, props) {
 
       document.getElementById('root').style.height = '100%';
 
-      if (localStorage.getItem('user')) {
-        let user = JSON.parse(localStorage.getItem('user'));
+      if (JSON.parse(localStorage.getItem('user'))) {
+        // let user = JSON.parse(localStorage.getItem('user'));
         // let tenant = localStorage.getItem('tenant' + user.id);
         // if (!tenant) {
         //   history.push('/settings');
         // }
-        if (!user.phoneNumber || !user.grades || !user.firstName || !user.lastName) {
-          history.push('/settings');
-        }
-      } else {
+
+        // if (!user.phoneNumber || !user.grades || !user.firstName || !user.lastName) {
+        //   history.push('/settings');
+        // }
         setLogged(true);
-        // history.push('/login');
+      } else {
+        console.log(window.location.pathname)
+        setLogged(false);
+        if (window.location.pathname.includes('login/code'))
+          history.push(window.location.pathname);
+        else
+          history.push('/login');
       }
     } catch (error) {
-      setLogged(true);
-      localStorage.removeItem("token");
-      localStorage.removeItem("expireAt");
+      //console.log(error)
+      setLogged(false);
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
       localStorage.removeItem("user");
       window.location.reload();
     }
@@ -64,12 +71,12 @@ function LayoutOfApp({ children }, props) {
     let day = today.getDate() < 10 ? '0' + (today.getDate()) : (today.getDate())
     let month = today.getMonth() + 1 < 10 ? '0' + (today.getMonth() + 1) : (today.getMonth() + 1);
     let year = today.getFullYear();
-    if (localStorage.getItem('startDate') === null || localStorage.getItem('toStart') === null) {
+    if (localStorage.getItem('startDate') == null || localStorage.getItem('toStart') == null) {
       localStorage.setItem('startDate', year + '-' + month + '-' + day)
       localStorage.setItem('toStart', month + '%2F' + day + '%2F' + year + '%20' + today.getHours().toString().padStart(2, '0') + ':' + today.getMinutes().toString().padStart(2, '0') + ':00 -0500')
     }
 
-    if (localStorage.getItem('startTime') === null) {
+    if (localStorage.getItem('startTime') == null) {
       localStorage.setItem('startTime', today.getHours().toString().padStart(2, '0') + ':' + today.getMinutes().toString().padStart(2, '0'));
     }
 
@@ -79,13 +86,13 @@ function LayoutOfApp({ children }, props) {
     month = today.getMonth() + 1 < 10 ? '0' + (today.getMonth() + 1) : (today.getMonth() + 1);
     year = today.getFullYear();
 
-    if (localStorage.getItem('endDate') === null || localStorage.getItem('toEnd') === null) {
+    if (localStorage.getItem('endDate') == null || localStorage.getItem('toEnd') == null) {
       localStorage.setItem('endDate', year + '-' + month + '-' + day)
       localStorage.setItem('toEnd', month + '%2F' + day + '%2F' + year + '%20' + today.getHours().toString().padStart(2, '0') + ':' + today.getMinutes().toString().padStart(2, '0') + ':00 -0500')
 
     }
 
-    if (localStorage.getItem('endTime') === null) {
+    if (localStorage.getItem('endTime') == null) {
       localStorage.setItem('endTime', today.getHours().toString().padStart(2, '0') + ':' + today.getMinutes().toString().padStart(2, '0'));
     }
 
@@ -116,7 +123,7 @@ function LayoutOfApp({ children }, props) {
     localStorage.removeItem("token");
     localStorage.removeItem("expireAt");
     localStorage.removeItem("user");
-
+    //console.log('Logout')
     window.location.reload();
   }
 

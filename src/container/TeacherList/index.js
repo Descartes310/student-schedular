@@ -664,7 +664,7 @@ function TeacherList() {
     const gradesToPrint = (profile) => {
         let i = 0;
         let result = '';
-        if (profile === null) {
+        if (profile == null) {
             return '';
         }
 
