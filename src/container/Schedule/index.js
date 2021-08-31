@@ -239,10 +239,10 @@ function Schedule() {
     const gradesToPrint = (profile) => {
         let i = 0;
         let result = '';
-        if (profile === null) {
+        if (profile == null) {
             return '';
         }
-        if (profile.grades === null) {
+        if (profile.grades == null) {
             return '';
         }
 

@@ -78,7 +78,7 @@ function CreateBooking() {
     }, [sortingType, sortingName, tableProps.pageIndex]);
 
     const changeChildren = (value) => {
-        if (value === null) {
+        if (value == null) {
             setChildren(null)
         }
         let _children = studentList.filter(c => c.id === value.id)[0];
@@ -97,7 +97,7 @@ function CreateBooking() {
 
     const handleSubmit = () => {
         //let s = schedules.filter(s => s.startDate == dat).filter(s => s.subject == subjec)[0];
-        if (comment === null || schedule === null)
+        if (comment == null || schedule == null)
             alert('Fill the form');
         setSubmitting(true);
 
@@ -317,10 +317,10 @@ function CreateBooking() {
     const gradesToPrint = (profile) => {
         let i = 0;
         let result = '';
-        if (profile === null) {
+        if (profile == null) {
             return '';
         }
-        if (profile.grades === null) {
+        if (profile.grades == null) {
             return '';
         }
 

@@ -67,7 +67,7 @@ function CreateAvailibility() {
 
     const handleSubmit = () => {
         let s = schedules.filter(s => s.startDate === dat).filter(s => s.endDate === endDate)[0];
-        if (s === null || children === null) {
+        if (s == null || children == null) {
             alert('Fill the form');
             return
         }
