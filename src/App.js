@@ -1,11 +1,12 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import './App.css';
 import addToken from './services/interceptor'
 import LayoutOfApp from './components/Layout'
 // Pages
 const TeacherList = React.lazy(() => import('./container/TeacherList'));
-// const Login = React.lazy(() => import('./container/Login'));
+const Login = React.lazy(() => import('./container/Login'));
+const Code = React.lazy(() => import('./container/Login/code'));
 const StudentList = React.lazy(() => import('./container/StudentList'));
 const StudentProfile = React.lazy(() => import('./container/StudentProfile'));
 const TeacherProfile = React.lazy(() => import('./container/TeacherProfile'));
@@ -55,7 +56,8 @@ function App() {
         <LayoutOfApp>
           <React.Suspense fallback={<div>Loading... </div>}>
             <Route exact path="/" name="Student Page" render={props => <StudentList {...props} />} />
-            {/* <Route exact path="/login" name="Login Page" render={props => <Login {...props} />} /> */}
+            <Route exact path="/login" name="Login Page" render={props => <Login {...props} />} />
+            <Route exact path="/login/code/:phone" name="Activation code Page" render={props => <Code {...props} />} />
             <Route exact path="/studentlist" name="Student Page" render={props => <StudentList {...props} />} />
             <Route exact path="/studentlist/add" name="Create Student Booking Page" render={props => <CreateBooking {...props} />} />
             <Route exact path="/studentlist/:id/update" name="Create Student Booking Page" render={props => <UpdateBooking {...props} />} />

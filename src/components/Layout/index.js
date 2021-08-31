@@ -39,22 +39,30 @@ function LayoutOfApp({ children }, props) {
       document.getElementById('root').style.height = '100%';
 
       if (localStorage.getItem('user')) {
-        let user = JSON.parse(localStorage.getItem('user'));
+        // let user = JSON.parse(localStorage.getItem('user'));
         // let tenant = localStorage.getItem('tenant' + user.id);
         // if (!tenant) {
         //   history.push('/settings');
         // }
-        if (!user.phoneNumber || !user.grades || !user.firstName || !user.lastName) {
-          history.push('/settings');
-        }
-      } else {
+
+        // if (!user.phoneNumber || !user.grades || !user.firstName || !user.lastName) {
+        //   history.push('/settings');
+        // }
         setLogged(true);
-        // history.push('/login');
+        console.log('Je suis connecté')
+      } else {
+        console.log(window.location.pathname)
+        setLogged(false);
+        if (window.location.pathname.includes('login/code'))
+          history.push(window.location.pathname);
+        else
+          history.push('/login');
       }
     } catch (error) {
-      setLogged(true);
-      localStorage.removeItem("token");
-      localStorage.removeItem("expireAt");
+      //console.log(error)
+      setLogged(false);
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
       localStorage.removeItem("user");
       window.location.reload();
     }
@@ -116,7 +124,7 @@ function LayoutOfApp({ children }, props) {
     localStorage.removeItem("token");
     localStorage.removeItem("expireAt");
     localStorage.removeItem("user");
-
+    //console.log('Logout')
     window.location.reload();
   }
 

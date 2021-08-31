@@ -1,23 +1,26 @@
 import './assets/css/global.css';
 import './assets/css/custom.css';
 import { Form, Input, Button } from 'antd'
-import { useHistory } from 'react-router-dom';
 import vector from './assets/images/logo.png';
 import background from './assets/images/bg.jpg';
 import React, { useEffect, useState } from 'react';
-import { getLoginCode } from "../../services/Teacher";
+import { useHistory, useLocation } from 'react-router-dom';
+import { sendLoginCode, getTeacherProfileById, getLoginCode } from "../../services/Teacher";
 
-function Login() {
+function Login(props) {
 
   const history = useHistory();
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [submitting, setSubmitting] = useState(false);
+  const location = useLocation();
+  const [code, setCode] = useState('');
   const [error, setError] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submittingCode, setSubmittingCode] = useState(false);
+  const [phone] = useState(props.match.params.phone);
 
   useEffect(() => {
     document.body.classList.add("img-bg");
     document.body.classList.add("min-height-full");
-    if (window.location.pathname === '/login') {
+    if (window.location.pathname.includes('login/code')) {
       document.body.style.backgroundImage = `url(${background})`;
       document.getElementById('root').style.height = '100%';
       document.getElementsByClassName('ant-layout')[0].style.height = '100%';
@@ -30,17 +33,38 @@ function Login() {
   }, []);
 
   const sendActivationCode = () => {
+    setSubmittingCode(true);
+    getLoginCode(phone).finally(() => {
+      setSubmittingCode(false);
+    })
+  }
+
+  const sendCode = () => {
     setSubmitting(true);
     setError(false);
-    getLoginCode(phoneNumber).then(teacher => {
-      history.push('/login/code/'+phoneNumber);
+    sendLoginCode(phone, code).then(token => {
+      findTeacher(token);
     }).catch(err => {
       console.log(err);
+      history.push('/login');
       setError(true);
     })
     .finally(() => {
-      setSubmitting(false);
+      setSubmitting(false)
     })
+  }
+
+  const findTeacher = (token) => {
+    console.log(token)
+    getTeacherProfileById(token.id).then(teacher => {
+      localStorage.setItem('user', JSON.stringify(teacher));
+      localStorage.setItem('accessToken', token.access_token);
+      localStorage.setItem('refreshToken', token.refresh_token);
+      history.push('/teacherlist');
+    }).catch(err => {
+      console.log(err)
+      history.push('/login');
+    });
   }
 
   return (
@@ -56,20 +80,28 @@ function Login() {
               <Input
                 type="text"
                 name="name"
-                value={phoneNumber}
+                value={code}
                 className="loginBox__btn"
                 style={{ paddingLeft: '5%' }}
-                placeholder="Enter your phone number"
-                onChange={(e) => { setError(false); setPhoneNumber(e.target.value) }}
+                placeholder="Enter your activation code"
+                onChange={(e) => { setError(false); setCode(e.target.value) }}
               />
             </Form.Item>
             <Button
-              disabled={submitting}
+              disabled={submitting || submittingCode}
               className="loginBox__btn"
               style={{ paddingBottom: '2.5rem' }}
               onClick={() => sendActivationCode()}
             >
-              <span> {!submitting ? 'Get Activation Code' : 'Getting code...'}</span>
+              <span> {!submittingCode ? 'Resend the code' : 'Sending code...'}</span>
+            </Button>
+            <Button
+              disabled={submitting || submittingCode}
+              className="loginBox__btn"
+              style={{ paddingBottom: '2.5rem' }}
+              onClick={() => sendCode()}
+            >
+              <span> {!submitting ? 'Login' : 'Logging...'}</span>
             </Button>
           </div>
         </div>
